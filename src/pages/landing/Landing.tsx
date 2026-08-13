@@ -19,7 +19,7 @@ export function Landing() {
         </p>
       </div>
 
-      <SectionHeading title="Tools" count={tools.length} />
+      <SectionHeading title="Tools" count={tools.length} level="h2" />
 
       <motion.div
         className={styles.grid}

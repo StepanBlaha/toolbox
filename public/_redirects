@@ -1,0 +1,4 @@
+# SPA fallback for Netlify / Cloudflare Pages.
+# Real files (including prerendered per-route index.html) are served first;
+# only unmatched routes fall through to the app shell.
+/*    /index.html   200

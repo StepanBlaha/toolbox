@@ -1,0 +1,165 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 20px;
+}
+
+.inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 760px) {
+  .inputs {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.textarea {
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.5;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: var(--bg);
+  color: var(--fg);
+  resize: vertical;
+  width: 100%;
+  min-height: 220px;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--line-strong);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--fg-muted);
+  cursor: pointer;
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.additions,
+.deletions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+}
+
+.additions {
+  color: #22c55e;
+  background: color-mix(in oklab, #22c55e 12%, transparent);
+  border-color: color-mix(in oklab, #22c55e 35%, var(--line));
+}
+
+.deletions {
+  color: #ef4444;
+  background: color-mix(in oklab, #ef4444 12%, transparent);
+  border-color: color-mix(in oklab, #ef4444 35%, var(--line));
+}
+
+.outputBlock {
+  margin-top: 4px;
+}
+
+.diffPanel {
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.55;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  overflow-x: auto;
+}
+
+.empty {
+  padding: 16px;
+  color: var(--fg-faint);
+}
+
+.rowAdded,
+.rowRemoved,
+.rowUnchanged {
+  display: grid;
+  grid-template-columns: 44px 44px 18px 1fr;
+  align-items: start;
+  white-space: pre;
+}
+
+.rowUnchanged {
+  color: var(--fg);
+}
+
+.rowAdded {
+  color: var(--fg);
+  background: color-mix(in oklab, #22c55e 14%, transparent);
+}
+
+.rowRemoved {
+  color: var(--fg);
+  background: color-mix(in oklab, #ef4444 14%, transparent);
+}
+
+.lineNo {
+  color: var(--fg-faint);
+  text-align: right;
+  padding: 1px 8px;
+  user-select: none;
+  border-right: 1px solid var(--edge);
+}
+
+.gutter {
+  text-align: center;
+  user-select: none;
+  padding: 1px 0;
+}
+
+.rowAdded .gutter {
+  color: #22c55e;
+}
+
+.rowRemoved .gutter {
+  color: #ef4444;
+}
+
+.lineText {
+  padding: 1px 10px 1px 4px;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}

@@ -1,12 +1,14 @@
-import { lazy, Suspense, useState } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { lazy, Suspense, useEffect, useState } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { RevealReadyProvider } from "./context/RevealReadyContext";
 import { useTheme } from "./hooks/useTheme";
+import { tools } from "./data/tools";
 import Preloader from "./components/Preloader/Preloader";
 import GridFrame from "./components/GridFrame/GridFrame";
 import Cursor from "./components/Cursor/Cursor";
 import TopNav from "./components/TopNav/TopNav";
 import { Landing } from "./pages/landing/Landing";
+import { NotFound } from "./pages/not-found/NotFound";
 
 // Tool pages are code-split so the initial load (and the heavy bg-remover ML
 // model) is only fetched when a tool is actually opened.
@@ -57,6 +59,16 @@ const Base64 = lazy(() => import("./pages/base64/Base64"));
 const Jwt = lazy(() => import("./pages/jwt/Jwt"));
 const CaseConverter = lazy(() => import("./pages/case-converter/CaseConverter"));
 const Regex = lazy(() => import("./pages/regex/Regex"));
+const FaviconGen = lazy(() => import("./pages/favicon/FaviconGen"));
+const OgImage = lazy(() => import("./pages/og-image/OgImage"));
+const DiffChecker = lazy(() => import("./pages/diff/DiffChecker"));
+const Cron = lazy(() => import("./pages/cron/Cron"));
+const Timestamp = lazy(() => import("./pages/timestamp/Timestamp"));
+const BaseConverter = lazy(() => import("./pages/base-converter/BaseConverter"));
+const MetaTags = lazy(() => import("./pages/meta-tags/MetaTags"));
+const UrlTool = lazy(() => import("./pages/url-tool/UrlTool"));
+const TextStats = lazy(() => import("./pages/text-stats/TextStats"));
+const Aes = lazy(() => import("./pages/aes/Aes"));
 
 function RouteFallback() {
   return (
@@ -75,9 +87,52 @@ function RouteFallback() {
   );
 }
 
+const SITE_TITLE = "toolbox — design & dev utilities";
+const SITE_URL = "https://toolbox.stepanblaha.com";
+const SITE_DESC =
+  "A collection of 55+ design and developer utilities — CSS generators, color tools, image tools, and IT utilities. Fast, free, and fully client-side.";
+
+// Keep <head> tags in sync on client-side navigation (scrapers get the correct
+// values from prerendered per-route HTML; this handles in-app route changes).
+function setMeta(selector: string, attr: string, value: string) {
+  let el = document.head.querySelector(selector) as HTMLElement | null;
+  if (!el) {
+    el = document.createElement(selector.startsWith("link") ? "link" : "meta");
+    const m = selector.match(/\[(name|property|rel)="([^"]+)"\]/);
+    if (m) el.setAttribute(m[1], m[2]);
+    document.head.appendChild(el);
+  }
+  el.setAttribute(attr, value);
+}
+
+function usePageSeo() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    const tool = tools.find((t) => t.path === pathname);
+    const isHome = pathname === "/";
+    const title = isHome
+      ? SITE_TITLE
+      : tool
+        ? `${tool.name} · toolbox`
+        : "Page not found · toolbox";
+    const desc = isHome ? SITE_DESC : tool ? tool.description : SITE_DESC;
+    const url = SITE_URL + (isHome ? "/" : pathname);
+
+    document.title = title;
+    setMeta('meta[name="description"]', "content", desc);
+    setMeta('link[rel="canonical"]', "href", url);
+    setMeta('meta[property="og:title"]', "content", title);
+    setMeta('meta[property="og:description"]', "content", desc);
+    setMeta('meta[property="og:url"]', "content", url);
+    setMeta('meta[name="twitter:title"]', "content", title);
+    setMeta('meta[name="twitter:description"]', "content", desc);
+  }, [pathname]);
+}
+
 function App() {
   const { theme, toggle } = useTheme();
   const [ready, setReady] = useState(false);
+  usePageSeo();
 
   return (
     <RevealReadyProvider ready={ready}>
@@ -133,7 +188,17 @@ function App() {
           <Route path="/tools/jwt" element={<Jwt />} />
           <Route path="/tools/case-converter" element={<CaseConverter />} />
           <Route path="/tools/regex" element={<Regex />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="/tools/favicon" element={<FaviconGen />} />
+          <Route path="/tools/og-image" element={<OgImage />} />
+          <Route path="/tools/diff" element={<DiffChecker />} />
+          <Route path="/tools/cron" element={<Cron />} />
+          <Route path="/tools/timestamp" element={<Timestamp />} />
+          <Route path="/tools/base-converter" element={<BaseConverter />} />
+          <Route path="/tools/meta-tags" element={<MetaTags />} />
+          <Route path="/tools/url-tool" element={<UrlTool />} />
+          <Route path="/tools/text-stats" element={<TextStats />} />
+          <Route path="/tools/aes" element={<Aes />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </RevealReadyProvider>
