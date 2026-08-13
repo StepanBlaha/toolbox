@@ -1,0 +1,206 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 24px;
+  padding-top: 20px;
+}
+
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.previewPanel {
+  min-height: 380px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.scene {
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  width: 260px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #ffffff;
+}
+
+.cardIcon {
+  opacity: 0.9;
+}
+
+.cardText {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.3px;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.fieldValue {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--fg-faint);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--fg);
+}
+
+.chips {
+  display: flex;
+  gap: 10px;
+}
+
+.chip {
+  flex: 1;
+  height: 48px;
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+  padding: 6px;
+  transition: border-color 0.2s ease, transform 0.15s ease;
+}
+
+.chip:hover {
+  transform: translateY(-1px);
+}
+
+.chipActive {
+  border-color: var(--fg);
+}
+
+.chipLabel {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.colorRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.colorInput {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 2px;
+  background: var(--bg);
+  cursor: pointer;
+}
+
+.textInput {
+  font-family: var(--mono);
+  font-size: 13px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 8px;
+  background: var(--bg);
+  color: var(--fg);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.colorRow .textInput {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.note {
+  font-size: 12px;
+  color: var(--fg-faint);
+}
+
+.outputBlock {
+  margin-top: 4px;
+}
+
+.outputHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.outputLabel {
+  font-size: 13px;
+  color: var(--fg-muted);
+}
+
+.copyBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.copyBtn:hover {
+  border-color: var(--line-strong);
+}
+
+.copyBtn.copied {
+  color: var(--info);
+  border-color: var(--info);
+}
+
+.pre {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}

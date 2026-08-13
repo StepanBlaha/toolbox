@@ -1,0 +1,30 @@
+.link {
+  color: inherit;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: var(--link-hover, currentColor);
+}
+
+.preview {
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
+  padding: 8px;
+  min-width: 180px;
+  max-width: 20rem;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+}
+
+.previewImg {
+  display: block;
+  width: 220px;
+  height: 132px;
+  object-fit: cover;
+  border-radius: 8px;
+}

@@ -1,0 +1,150 @@
+.layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
+  padding-top: 20px;
+}
+
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.swatchWrap {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.checkerboard {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(45deg, var(--panel) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--panel) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--panel) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--panel) 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+  background-color: var(--bg);
+}
+
+.swatch {
+  position: absolute;
+  inset: 0;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.fieldValue {
+  font-family: var(--mono);
+  color: var(--fg);
+}
+
+.colorRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.colorInput {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 2px;
+  background: var(--bg);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.textInput {
+  font-family: var(--mono);
+  font-size: 13px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 8px;
+  background: var(--bg);
+  color: var(--fg);
+  box-sizing: border-box;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px;
+  background: var(--bg-soft);
+}
+
+.rowLabel {
+  font-size: 12px;
+  color: var(--fg-muted);
+  width: 56px;
+  flex-shrink: 0;
+}
+
+.rowValue {
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--fg);
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.copyBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.copyBtn:hover {
+  border-color: var(--line-strong);
+}
+
+.copyBtn.copied {
+  color: var(--info);
+  border-color: var(--info);
+}

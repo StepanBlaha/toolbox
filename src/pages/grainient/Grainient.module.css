@@ -1,0 +1,241 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 24px;
+  padding-top: 20px;
+}
+
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.previewPanel {
+  min-height: 380px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: radial-gradient(var(--dot) 1px, transparent 1px);
+  background-size: 22px 22px;
+  padding: 16px;
+}
+
+.previewBox {
+  width: 100%;
+  height: 100%;
+  min-height: 348px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background-repeat: repeat, no-repeat;
+  background-size: auto, cover;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field label {
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.fieldValue {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--fg-faint);
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--fg);
+}
+
+.angleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.angleRow input[type="range"] {
+  flex: 1;
+}
+
+.numberInput,
+.textInput {
+  font-family: var(--mono);
+  font-size: 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 8px;
+  background: var(--bg);
+  color: var(--fg);
+  width: 100%;
+}
+
+.numberInput {
+  width: 68px;
+  flex-shrink: 0;
+}
+
+.select {
+  font-family: var(--mono);
+  font-size: 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 8px;
+  background: var(--bg);
+  color: var(--fg);
+  width: 100%;
+  cursor: pointer;
+}
+
+.stops {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.stop {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stopHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stopTitle {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--fg-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.removeBtn {
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg-muted);
+  cursor: pointer;
+}
+
+.removeBtn:hover {
+  border-color: var(--line-strong);
+  color: var(--fg);
+}
+
+.colorRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.colorInput {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 2px;
+  background: var(--bg);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.addBtn {
+  align-self: flex-start;
+  font-family: var(--mono);
+  font-size: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 14px;
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.addBtn:hover {
+  border-color: var(--line-strong);
+  background: var(--panel);
+}
+
+.outputBlock {
+  margin-top: 4px;
+}
+
+.outputHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.outputLabel {
+  font-size: 13px;
+  color: var(--fg-muted);
+}
+
+.copyBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.copyBtn:hover {
+  border-color: var(--line-strong);
+}
+
+.copyBtn.copied {
+  color: var(--info);
+  border-color: var(--info);
+}
+
+.pre {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}

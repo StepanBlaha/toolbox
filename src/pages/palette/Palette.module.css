@@ -1,0 +1,230 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding-top: 20px;
+}
+
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.left,
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dropzone {
+  border: 1px dashed var(--line-strong);
+  border-radius: 10px;
+  background: var(--bg-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 180px;
+  padding: 24px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.dropzone:hover {
+  border-color: var(--fg-faint);
+  background: var(--panel);
+}
+
+.dropzoneActive {
+  border-color: var(--info);
+  background: var(--panel);
+}
+
+.dropIcon {
+  color: var(--fg-muted);
+}
+
+.dropText {
+  font-size: 13px;
+  color: var(--fg-muted);
+  text-align: center;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.error {
+  font-size: 13px;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.previewWrap {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-soft);
+  background-image: radial-gradient(var(--dot) 1px, transparent 1px);
+  background-size: 22px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview {
+  display: block;
+  max-width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+}
+
+.countRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.countLabel {
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.countButtons {
+  display: flex;
+  gap: 6px;
+}
+
+.countBtn {
+  font-family: var(--mono);
+  font-size: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: transparent;
+  color: var(--fg-muted);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.countBtn:hover {
+  border-color: var(--line-strong);
+  color: var(--fg);
+}
+
+.countBtnActive {
+  border-color: var(--fg);
+  color: var(--fg);
+  background: var(--panel);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.swatchCard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px;
+  background: var(--bg-soft);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s ease;
+}
+
+.swatchCard:hover {
+  border-color: var(--line-strong);
+}
+
+.swatchColor {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.swatchInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.swatchHex {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--fg);
+}
+
+.swatchRgb {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--fg-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.swatchCopyIcon {
+  margin-left: auto;
+  color: var(--fg-faint);
+  flex-shrink: 0;
+}
+
+.copyAllBtn {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 14px;
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.copyAllBtn:hover {
+  border-color: var(--line-strong);
+  background: var(--panel);
+}
+
+.copyAllBtn.copied {
+  color: var(--info);
+  border-color: var(--info);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 180px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-soft);
+  color: var(--fg-muted);
+  font-size: 13px;
+  text-align: center;
+  padding: 24px;
+}
+
+.emptyIcon {
+  color: var(--fg-faint);
+}

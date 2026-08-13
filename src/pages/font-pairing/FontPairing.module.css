@@ -1,0 +1,263 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 24px;
+  padding-top: 20px;
+}
+
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.previewPanel {
+  min-height: 380px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  padding: 28px;
+  background-image: radial-gradient(var(--dot) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.previewLabels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-bottom: 4px;
+}
+
+.previewLabel {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--fg-muted);
+}
+
+.previewLabel b {
+  color: var(--fg);
+  font-weight: 500;
+}
+
+.previewHeading {
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.15;
+  color: var(--fg);
+  overflow-wrap: anywhere;
+}
+
+.previewBody {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--fg-muted);
+  max-width: 60ch;
+  overflow-wrap: anywhere;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+}
+
+.field label {
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.pickerWrap {
+  position: relative;
+}
+
+.pickerInput {
+  width: 100%;
+  height: 34px;
+  font-family: var(--sans);
+  font-size: 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 10px;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.pickerInput:focus {
+  outline: none;
+  border-color: var(--line-strong);
+}
+
+.pickerValue {
+  position: absolute;
+  left: 10px;
+  top: 0;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--fg);
+  pointer-events: none;
+}
+
+.pickerInput:focus + .pickerValue,
+.pickerWrap:has(.pickerInput:focus) .pickerValue {
+  display: none;
+}
+
+.pickerList {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 280px;
+  overflow-y: auto;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  list-style: none;
+  padding: 4px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.pickerOption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 9px;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--fg);
+  cursor: pointer;
+}
+
+.pickerOption:hover,
+.pickerOptionActive {
+  background: var(--panel);
+}
+
+.pickerOptionSelected {
+  color: var(--info);
+}
+
+.pickerCategory {
+  font-size: 10px;
+  color: var(--fg-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
+}
+
+.pickerEmpty {
+  padding: 8px 9px;
+  font-size: 12.5px;
+  color: var(--fg-faint);
+}
+
+.randomBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  font-family: var(--mono);
+  font-size: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 14px;
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  align-self: flex-start;
+}
+
+.randomBtn:hover {
+  border-color: var(--line-strong);
+  background: var(--panel);
+}
+
+.textInput,
+.textareaInput {
+  font-family: var(--sans);
+  font-size: 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: var(--bg);
+  color: var(--fg);
+  width: 100%;
+  resize: vertical;
+}
+
+.textInput {
+  height: 34px;
+}
+
+.textareaInput {
+  min-height: 80px;
+  line-height: 1.5;
+}
+
+.outputBlock {
+  margin-top: 4px;
+}
+
+.outputHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.outputLabel {
+  font-size: 13px;
+  color: var(--fg-muted);
+}
+
+.copyBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.copyBtn:hover {
+  border-color: var(--line-strong);
+}
+
+.copyBtn.copied {
+  color: var(--info);
+  border-color: var(--info);
+}
+
+.pre {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}

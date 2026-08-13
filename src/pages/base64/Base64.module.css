@@ -1,0 +1,225 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 20px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.chips {
+  display: flex;
+  gap: 6px;
+}
+
+.chip {
+  font-family: var(--mono);
+  font-size: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 14px;
+  background: transparent;
+  color: var(--fg-muted);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.chip:hover {
+  border-color: var(--line-strong);
+  color: var(--fg);
+}
+
+.chipActive {
+  border-color: var(--line-strong);
+  background: var(--panel);
+  color: var(--fg);
+}
+
+.urlSafeToggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--fg-muted);
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.urlSafeToggle input {
+  accent-color: var(--fg);
+}
+
+.textLayout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 760px) {
+  .textLayout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fileLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.panelLabel {
+  font-size: 12px;
+  color: var(--fg-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  font-family: var(--mono);
+}
+
+.textarea {
+  min-height: 260px;
+  resize: vertical;
+  font-family: var(--mono);
+  font-size: 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.5;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--line-strong);
+}
+
+.outputHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.copyBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.copyBtn:hover:not(:disabled) {
+  border-color: var(--line-strong);
+}
+
+.copyBtn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.copyBtn.copied {
+  color: var(--info);
+  border-color: var(--info);
+}
+
+.pre {
+  min-height: 260px;
+  max-height: 400px;
+  overflow: auto;
+  font-family: var(--mono);
+  font-size: 13px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.error {
+  min-height: 260px;
+  font-size: 13px;
+  color: #ef4444;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.dropzone {
+  border: 1px dashed var(--line-strong);
+  border-radius: 10px;
+  background: var(--bg-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 160px;
+  padding: 24px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.dropzone:hover {
+  border-color: var(--fg-faint);
+  background: var(--panel);
+}
+
+.dropzoneActive {
+  border-color: var(--info);
+  background: var(--panel);
+}
+
+.dropIcon {
+  color: var(--fg-muted);
+}
+
+.dropText {
+  font-size: 13px;
+  color: var(--fg-muted);
+  text-align: center;
+  word-break: break-all;
+  max-width: 100%;
+  padding: 0 12px;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 120px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--fg-muted);
+  font-size: 13px;
+  text-align: center;
+  padding: 24px;
+}
+
+.emptyIcon {
+  color: var(--fg-faint);
+}

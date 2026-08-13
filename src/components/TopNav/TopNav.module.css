@@ -1,0 +1,136 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding: 0 clamp(18px, 4vw, 46px);
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+/* Blur removed globally; also make the bar fully solid so it stays legible. */
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .nav {
+    background: var(--bg);
+  }
+}
+@media (prefers-contrast: more) {
+  .nav {
+    border-bottom-color: var(--fg);
+  }
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, transform 0.12s ease-out;
+}
+.brand:hover {
+  opacity: 1;
+}
+.mark {
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--fg);
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  list-style: none;
+}
+.links a {
+  position: relative;
+  font-size: 14px;
+  color: var(--fg-muted);
+  font-weight: 500;
+  padding: 4px 0;
+  transition: color 0.2s ease;
+}
+.links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--fg);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+.links a:hover {
+  color: var(--fg);
+}
+.links a.active {
+  color: var(--fg);
+  font-weight: 700;
+}
+.links a.active::after {
+  transform: scaleX(1);
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  color: var(--fg-muted);
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease,
+    transform 0.12s ease-out;
+}
+.icon:hover {
+  color: var(--fg);
+  border-color: var(--line-strong);
+  background: var(--panel);
+}
+/* Instant press feedback — works on touch, where :hover never fires (§1/§10). */
+.icon:active {
+  transform: scale(0.92);
+  transition-duration: 80ms;
+}
+.brand:active {
+  transform: scale(0.96);
+}
+.links a:active {
+  color: var(--fg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .icon:active,
+  .brand:active {
+    transform: none;
+  }
+}
+
+.divider {
+  width: 1px;
+  height: 22px;
+  background: var(--line-strong);
+}
+
+@media (max-width: 720px) {
+  .links {
+    display: none;
+  }
+}

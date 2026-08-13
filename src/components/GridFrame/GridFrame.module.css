@@ -1,0 +1,18 @@
+.frame {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.glow {
+  position: absolute;
+  top: -18vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(900px, 80vw);
+  height: 620px;
+  background: radial-gradient(ellipse at center, var(--accent-glow), transparent 70%);
+  filter: blur(20px);
+  opacity: 0.9;
+}

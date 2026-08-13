@@ -1,0 +1,117 @@
+.card {
+  position: relative;
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px;
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.2s ease;
+}
+
+.card:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px -14px color-mix(in oklab, var(--fg) 40%, transparent);
+}
+
+.card:hover .iconBox {
+  border-color: var(--fg);
+}
+
+.card:hover .cornerArrow {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.card:active {
+  transform: scale(0.98);
+  transition-duration: 120ms;
+}
+
+.card.soon {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.card.soon:hover {
+  border-color: var(--line);
+  transform: none;
+  box-shadow: none;
+}
+
+.card.soon:hover .iconBox {
+  border-color: var(--line);
+}
+
+.cornerArrow {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg-muted);
+  opacity: 0;
+  transform: translate(-3px, 3px);
+  transition:
+    opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.iconBox {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  color: var(--fg);
+  transition: border-color 0.2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card:hover,
+  .card:active,
+  .cornerArrow {
+    transform: none;
+  }
+}
+
+.name {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.description {
+  color: var(--fg-muted);
+  font-size: 13px;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+
+.pill {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-radius: 999px;
+  padding: 3px 9px;
+}
+
+.pillReady {
+  background: var(--info);
+  color: #ffffff;
+}
+
+.pillSoon {
+  background: var(--panel);
+  color: var(--fg-faint);
+  border: 1px solid var(--line);
+}

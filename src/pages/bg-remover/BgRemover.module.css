@@ -1,0 +1,368 @@
+.dropzone {
+  border: 1px dashed var(--line-strong);
+  border-radius: 10px;
+  background: var(--bg-soft);
+  padding: 32px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.dropzone:hover,
+.dropzone.dragging {
+  border-color: var(--fg-muted);
+  background: var(--panel);
+}
+
+.dropzoneIcon {
+  color: var(--fg-muted);
+}
+
+.dropzoneText {
+  font-size: 13px;
+  color: var(--fg-muted);
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.emptyNote {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--fg-faint);
+}
+
+.actionsRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.primaryBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--fg);
+  color: var(--bg);
+  border: none;
+  border-radius: 9px;
+  padding: 9px 16px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.primaryBtn:hover {
+  opacity: 0.88;
+}
+
+.primaryBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.secondaryBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--sans);
+  font-size: 13px;
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 9px 16px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.secondaryBtn:hover {
+  border-color: var(--line-strong);
+  background: var(--panel);
+}
+
+.spin {
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.progressBlock {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.progressBar {
+  width: 100%;
+  height: 6px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--info);
+  border-radius: 999px;
+  transition: width 0.2s ease;
+}
+
+.progressLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.progressHint {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--fg-faint);
+}
+
+.errorNote {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: color-mix(in oklab, #ef4444 70%, var(--fg-muted));
+  border: 1px solid color-mix(in oklab, #ef4444 35%, var(--line));
+  background: color-mix(in oklab, #ef4444 8%, var(--bg-soft));
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.hiddenCanvas {
+  display: none;
+}
+
+.fileRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.fileName {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--fg-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fileRowActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.iconBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--sans);
+  font-size: 12px;
+  background: transparent;
+  color: var(--fg-muted);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.iconBtn:hover {
+  border-color: var(--line-strong);
+  background: var(--panel);
+  color: var(--fg);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.panelLabel {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--fg-muted);
+}
+
+.imageFrame {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-soft);
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.checkerboard {
+  position: absolute;
+  inset: 0;
+  background-image: conic-gradient(
+    var(--panel) 90deg,
+    transparent 90deg 180deg,
+    var(--panel) 180deg 270deg,
+    transparent 270deg
+  );
+  background-size: 20px 20px;
+  background-color: var(--bg);
+}
+
+.compareFrame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-soft);
+  touch-action: none;
+  cursor: ew-resize;
+  user-select: none;
+}
+
+.compareImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.afterLayer {
+  position: absolute;
+  inset: 0;
+  will-change: clip-path;
+}
+
+.divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.dividerLine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg);
+  box-shadow: 0 0 0 1px var(--line-strong);
+}
+
+.dividerHandle {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg-muted);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+}
+
+.compareRange {
+  width: 100%;
+  margin-top: 10px;
+  accent-color: var(--fg);
+}
+
+.bgOptions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.bgOptionsLabel {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--fg-muted);
+}
+
+.radioRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--fg-muted);
+  cursor: pointer;
+}
+
+.radioRow input {
+  accent-color: var(--fg);
+}
+
+.colorInput {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 2px;
+  background: var(--bg);
+  cursor: pointer;
+}
+
+.image {
+  max-width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  display: block;
+}
+
+.placeholderText {
+  font-size: 12px;
+  color: var(--fg-faint);
+}

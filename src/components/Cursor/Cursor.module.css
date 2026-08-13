@@ -1,0 +1,19 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  pointer-events: none;
+  will-change: transform;
+  /* anchor the arrow tip (path point ~4,3 in the 24px viewBox) to the pointer */
+  translate: -4px -3px;
+}
+
+.icon {
+  display: block;
+  width: 26px;
+  height: 26px;
+  /* scale/rotate on hover pivots around the tip so it stays on the pointer */
+  transform-origin: 17% 13%;
+  filter: drop-shadow(0 2px 6px var(--accent-glow));
+}

@@ -1,0 +1,27 @@
+# Štěpán Bláha
+
+> Front-end developer based in Prague, building fast, precise web interfaces with React & TypeScript. Founder of @Labz, a web agency.
+
+## Contact
+- Name: Štěpán Bláha
+- Role: Front-End Developer
+- Location: Prague, Czech Republic
+- Email: stepa15.b@gmail.com
+- Website: https://www.stepanblaha.com/
+
+## Sections
+- [About](https://www.stepanblaha.com/#about): A quick intro to me, my focus, and how I work.
+- [Stack](https://www.stepanblaha.com/#stack): The technologies I work with day to day.
+- [Experience](https://www.stepanblaha.com/#experience): Roles and highlights from my work.
+- [Education](https://www.stepanblaha.com/#education): My education background.
+- [Projects](https://www.stepanblaha.com/#projects): Selected projects that show my work.
+- [Honors & Awards](https://www.stepanblaha.com/#honors): Key awards and honors.
+- [Certifications](https://www.stepanblaha.com/#certifications): Certifications and credentials I've earned.
+- [Contact](https://www.stepanblaha.com/#contact): The best ways to reach me.
+
+## Links
+- GitHub: https://github.com/StepanBlaha
+- LinkedIn: https://www.linkedin.com/in/%C5%A1t%C4%9Bp%C3%A1n-bl%C3%A1ha-88b59b315/
+- LeetCode: https://leetcode.com/u/stepa15/
+- Instagram: https://www.instagram.com/stepa15.b/
+- @Labz: https://labzcompany.com

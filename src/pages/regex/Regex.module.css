@@ -1,0 +1,250 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding-top: 20px;
+}
+
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.controls,
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.patternRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  height: 34px;
+  padding: 0 10px;
+}
+
+.patternRow:focus-within {
+  border-color: var(--line-strong);
+}
+
+.slash {
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--fg-faint);
+  flex-shrink: 0;
+}
+
+.patternInput {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--fg);
+}
+
+.flagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.flagChip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 10px;
+  height: 34px;
+  box-sizing: border-box;
+  color: var(--fg-muted);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.flagChip:hover {
+  border-color: var(--line-strong);
+}
+
+.flagChip input {
+  accent-color: var(--info);
+  cursor: pointer;
+}
+
+.flagChipActive {
+  color: var(--fg);
+  border-color: var(--info);
+}
+
+.error {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: #ef4444;
+  border: 1px solid #ef4444;
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: color-mix(in oklab, #ef4444 10%, transparent);
+}
+
+.textarea {
+  font-family: var(--mono);
+  font-size: 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: var(--bg);
+  color: var(--fg);
+  resize: vertical;
+  min-height: 160px;
+  line-height: 1.6;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--line-strong);
+}
+
+.outputHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.outputLabel {
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.countBadge {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--info);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.highlightBox {
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--panel);
+  min-height: 120px;
+}
+
+.mark {
+  background: color-mix(in oklab, var(--info) 22%, transparent);
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--info);
+  text-underline-offset: 2px;
+  border-radius: 3px;
+  padding: 0 1px;
+}
+
+.fgFaint {
+  color: var(--fg-faint);
+  font-size: 13px;
+}
+
+.matchList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+}
+
+.matchItem {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.matchHead {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.matchIndex {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--fg-faint);
+}
+
+.matchAt {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--fg-faint);
+}
+
+.matchText {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--fg);
+  word-break: break-all;
+}
+
+.groupList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  list-style: none;
+  padding-left: 12px;
+  border-left: 2px solid var(--line);
+}
+
+.groupItem {
+  display: flex;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.groupLabel {
+  color: var(--fg-muted);
+  min-width: 64px;
+  flex-shrink: 0;
+}
+
+.groupValue {
+  color: var(--fg);
+  word-break: break-all;
+}
+
+.undefinedVal {
+  color: var(--fg-faint);
+  font-style: italic;
+}

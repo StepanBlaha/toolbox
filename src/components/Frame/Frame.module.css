@@ -1,0 +1,25 @@
+.page {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-top: 64px; /* clear the fixed 64px TopNav */
+  min-height: 100vh;
+}
+
+.container {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding-top: 48px;
+  padding-bottom: 80px;
+  border-left: 1px solid var(--edge);
+  border-right: 1px solid var(--edge);
+  min-height: calc(100vh - 64px);
+}
+
+.container.wide {
+  max-width: 1100px;
+}
+
+.inner {
+  padding: 0 var(--pad);
+}

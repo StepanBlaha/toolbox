@@ -1,0 +1,213 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding-top: 20px;
+}
+
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.left,
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.baseRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.baseSwatch {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.baseFields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.colorRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.colorInput {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 2px;
+  background: var(--bg);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.textInput {
+  font-family: var(--mono);
+  font-size: 13px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 8px;
+  background: var(--bg);
+  color: var(--fg);
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.colorRow .textInput {
+  flex: 1 1 0;
+}
+
+.randomBtn {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 12px;
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.randomBtn:hover {
+  border-color: var(--line-strong);
+  background: var(--panel);
+}
+
+.harmonyRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.harmonyChip {
+  font-family: var(--mono);
+  font-size: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: transparent;
+  color: var(--fg-muted);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.harmonyChip:hover {
+  border-color: var(--line-strong);
+  color: var(--fg);
+}
+
+.harmonyChipActive {
+  border-color: var(--fg);
+  color: var(--fg);
+  background: var(--panel);
+}
+
+.previewStrip {
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  height: 48px;
+}
+
+.previewChip {
+  flex: 1;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.swatchCard {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg-soft);
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  transition: border-color 0.2s ease;
+}
+
+.swatchCard:hover {
+  border-color: var(--line-strong);
+}
+
+.swatchColor {
+  display: block;
+  width: 100%;
+  height: 72px;
+}
+
+.swatchFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+}
+
+.swatchHex {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--fg);
+}
+
+.swatchCopyIcon {
+  color: var(--fg-faint);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.copyAllBtn {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 14px;
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.copyAllBtn:hover {
+  border-color: var(--line-strong);
+  background: var(--panel);
+}
+
+.copyAllBtn.copied {
+  color: var(--info);
+  border-color: var(--info);
+}
