@@ -131,7 +131,7 @@ export function Aes() {
       }
     } catch {
       if (mode === "decrypt") {
-        setError("Decryption failed — wrong passphrase or corrupted input");
+        setError("Decryption failed - wrong passphrase or corrupted input");
       } else {
         setError("Encryption failed. Please try again.");
       }
@@ -231,7 +231,7 @@ export function Aes() {
           </button>
 
           <p className={styles.note}>
-            AES-GCM 256, PBKDF2-SHA256. Runs entirely in your browser —
+            AES-GCM 256, PBKDF2-SHA256. Runs entirely in your browser -
             nothing is sent anywhere.
           </p>
         </motion.div>

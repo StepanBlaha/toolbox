@@ -362,7 +362,7 @@ export default function BgRemover() {
                 </div>
                 <div className={styles.progressLabel}>
                   <span>
-                    {progressLabel ? `${progressLabel} — ` : ""}
+                    {progressLabel ? `${progressLabel} - ` : ""}
                     {progress}%
                   </span>
                   {!hasCompletedOnce && (
@@ -400,7 +400,7 @@ export default function BgRemover() {
               <>
                 <div className={styles.panel}>
                   <span className={styles.panelLabel}>
-                    Drag to compare — original vs. background removed
+                    Drag to compare - original vs. background removed
                   </span>
                   <div
                     ref={frameRef}

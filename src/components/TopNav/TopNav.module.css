@@ -105,7 +105,7 @@
   border-color: var(--line-strong);
   background: var(--panel);
 }
-/* Instant press feedback — works on touch, where :hover never fires (§1/§10). */
+/* Instant press feedback - works on touch, where :hover never fires (§1/§10). */
 .icon:active {
   transform: scale(0.92);
   transition-duration: 80ms;

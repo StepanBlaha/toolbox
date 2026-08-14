@@ -110,7 +110,7 @@ function OutputRow({ label, value }: CaseDef) {
   return (
     <motion.div className={styles.row} variants={revealItem}>
       <span className={styles.rowLabel}>{label}</span>
-      <span className={styles.rowValue}>{value || "—"}</span>
+      <span className={styles.rowValue}>{value || "-"}</span>
       <button
         type="button"
         className={clsx(styles.copyBtn, copied && styles.copied)}

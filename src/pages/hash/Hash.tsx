@@ -104,7 +104,7 @@ export function Hash() {
                   {copied === algo ? "Copied" : "Copy"}
                 </button>
               </div>
-              <pre className={styles.pre}>{digests[algo] || "—"}</pre>
+              <pre className={styles.pre}>{digests[algo] || "-"}</pre>
             </div>
           ))}
         </motion.div>

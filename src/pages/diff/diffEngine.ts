@@ -3,7 +3,7 @@
 // This is a classic O(n*m) dynamic-programming LCS over the two line arrays,
 // followed by a backtrack through the DP table to emit an ordered list of
 // diff rows (added / removed / unchanged). This is NOT a naive index-by-index
-// comparison — lines that shifted position (insertions/deletions in the
+// comparison - lines that shifted position (insertions/deletions in the
 // middle of the text) are still correctly matched as "unchanged" wherever
 // they appear in the longest common subsequence.
 

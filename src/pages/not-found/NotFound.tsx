@@ -24,7 +24,7 @@ export function NotFound() {
           Page not found
         </motion.h1>
         <motion.p className={styles.text} variants={revealItem}>
-          That tool doesn&apos;t exist — it may have been renamed or never
+          That tool doesn&apos;t exist - it may have been renamed or never
           existed. Head back and pick one from the shelf.
         </motion.p>
         <motion.div variants={revealItem}>

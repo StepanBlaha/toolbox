@@ -1,7 +1,7 @@
 import { createContext, useContext, type ReactNode } from "react";
 
 /**
- * Tracks whether the page is "ready" for scroll-reveal animations — i.e. the
+ * Tracks whether the page is "ready" for scroll-reveal animations - i.e. the
  * preloader has finished. Until then, reveal sections stay hidden so they don't
  * silently animate behind the preloader overlay.
  */

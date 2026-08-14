@@ -269,7 +269,7 @@ export function ImageCompressor() {
                   )}
                 </div>
                 <span className={styles.previewSize}>
-                  {compressedSize !== null ? formatBytes(compressedSize) : "—"}
+                  {compressedSize !== null ? formatBytes(compressedSize) : "-"}
                 </span>
               </div>
             </div>
@@ -324,7 +324,7 @@ export function ImageCompressor() {
 
           <div className={styles.field}>
             <label htmlFor="maxWidth">
-              Max width <span className={styles.fieldValue}>{maxWidth || "—"}px</span>
+              Max width <span className={styles.fieldValue}>{maxWidth || "-"}px</span>
             </label>
             <input
               id="maxWidth"
@@ -342,13 +342,13 @@ export function ImageCompressor() {
             <div className={styles.statRow}>
               <span className={styles.statLabel}>Original</span>
               <span className={styles.statValue}>
-                {source ? formatBytes(source.size) : "—"}
+                {source ? formatBytes(source.size) : "-"}
               </span>
             </div>
             <div className={styles.statRow}>
               <span className={styles.statLabel}>Compressed</span>
               <span className={styles.statValue}>
-                {compressedSize !== null ? formatBytes(compressedSize) : "—"}
+                {compressedSize !== null ? formatBytes(compressedSize) : "-"}
                 {outWidth && outHeight ? ` · ${outWidth}×${outHeight}` : ""}
               </span>
             </div>
@@ -361,7 +361,7 @@ export function ImageCompressor() {
                   savedPct !== null && savedPct <= 0 && styles.grew
                 )}
               >
-                {savedPct !== null ? `${savedPct}%` : "—"}
+                {savedPct !== null ? `${savedPct}%` : "-"}
                 {isWorking ? " · encoding…" : ""}
               </span>
             </div>

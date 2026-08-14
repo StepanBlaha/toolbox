@@ -81,7 +81,7 @@ export function Base64() {
       setError(
         mode === "encode"
           ? "Could not encode that input."
-          : "Invalid base64 input — could not decode."
+          : "Invalid base64 input - could not decode."
       );
     }
   }, [input, mode, urlSafe, inputKind]);

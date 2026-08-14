@@ -40,7 +40,7 @@ function runOp(op: EncodeOp, input: string): EncodeResult {
         return { output: decodeURI(input), error: null };
     }
   } catch {
-    return { output: "", error: `Could not run ${op} on this input — malformed escape sequence.` };
+    return { output: "", error: `Could not run ${op} on this input - malformed escape sequence.` };
   }
 }
 
@@ -65,7 +65,7 @@ function parseUrl(raw: string): ParseResult {
   try {
     url = new URL(trimmed);
   } catch {
-    return { fields: [], params: [], error: "Not a valid URL — include the protocol, e.g. https://" };
+    return { fields: [], params: [], error: "Not a valid URL - include the protocol, e.g. https://" };
   }
 
   const fields: ParsedUrlFields[] = [

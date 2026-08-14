@@ -4,7 +4,7 @@ import styles from "./SiteFooter.module.css";
 
 const NAME = "Štěpán Bláha";
 const LOCATION = "Prague, Czech Republic";
-const GITHUB = "https://github.com/StepanBlaha";
+const GITHUB = "https://github.com/StepanBlaha/toolbox";
 const LINKEDIN =
   "https://www.linkedin.com/in/%C5%A1t%C4%9Bp%C3%A1n-bl%C3%A1ha-88b59b315/";
 

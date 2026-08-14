@@ -4,7 +4,7 @@ import { prefersReducedMotion } from "./motionPref";
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 // §14: under reduced motion, drop the slide/scale and use a plain opacity
-// cross-fade — comprehension is preserved, vestibular motion is not.
+// cross-fade - comprehension is preserved, vestibular motion is not.
 const reduced = prefersReducedMotion();
 
 // Stagger container: children reveal one after another once it enters view.
@@ -23,7 +23,7 @@ export const revealItem: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE } },
 };
 
-// Block: fades up with a subtle scale — used for card grids like socials.
+// Block: fades up with a subtle scale - used for card grids like socials.
 export const revealBlock: Variants = {
   hidden: { opacity: 0, y: reduced ? 0 : 20, scale: reduced ? 1 : 0.96 },
   show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: EASE } },

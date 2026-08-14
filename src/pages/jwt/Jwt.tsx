@@ -175,7 +175,7 @@ export function Jwt() {
             </div>
           )}
 
-          <div className={styles.note}>Decode only — the signature is not verified.</div>
+          <div className={styles.note}>Decode only - the signature is not verified.</div>
         </motion.div>
 
         <motion.div className={styles.panel} variants={revealItem}>

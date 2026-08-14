@@ -38,7 +38,7 @@ export default function TopNav({
 
       <div className={styles.right}>
         <a
-          href="https://github.com/StepanBlaha"
+          href="https://github.com/StepanBlaha/toolbox"
           target="_blank"
           rel="noreferrer"
           className={styles.icon}

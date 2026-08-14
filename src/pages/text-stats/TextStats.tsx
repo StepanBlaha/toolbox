@@ -95,7 +95,7 @@ function computeReadability(text: string, stats: Stats): Readability {
 
   return {
     fleschScore: stats.words > 0 ? fleschScore : 0,
-    fleschLabel: stats.words > 0 ? fleschLabel : "—",
+    fleschLabel: stats.words > 0 ? fleschLabel : "-",
     gradeLevel: stats.words > 0 ? gradeLevel : 0,
   };
 }

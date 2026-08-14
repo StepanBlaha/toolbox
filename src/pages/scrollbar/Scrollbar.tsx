@@ -240,7 +240,7 @@ export function Scrollbar() {
           <p className={styles.hint}>
             Scroll the preview on the left (Chromium/WebKit) to see the live
             result. Firefox only supports the thin/auto width and a single
-            thumb/track color pair — shown separately below.
+            thumb/track color pair - shown separately below.
           </p>
 
           <div className={styles.outputBlock}>

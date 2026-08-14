@@ -302,10 +302,10 @@ function QrCode() {
                 setEcLevel(e.target.value as ErrorCorrectionLevel)
               }
             >
-              <option value="L">L — Low (~7%)</option>
-              <option value="M">M — Medium (~15%)</option>
-              <option value="Q">Q — Quartile (~25%)</option>
-              <option value="H">H — High (~30%)</option>
+              <option value="L">L - Low (~7%)</option>
+              <option value="M">M - Medium (~15%)</option>
+              <option value="Q">Q - Quartile (~25%)</option>
+              <option value="H">H - High (~30%)</option>
             </select>
           </div>
 

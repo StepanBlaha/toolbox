@@ -69,6 +69,16 @@ const MetaTags = lazy(() => import("./pages/meta-tags/MetaTags"));
 const UrlTool = lazy(() => import("./pages/url-tool/UrlTool"));
 const TextStats = lazy(() => import("./pages/text-stats/TextStats"));
 const Aes = lazy(() => import("./pages/aes/Aes"));
+const AsciiArt = lazy(() => import("./pages/ascii-art/AsciiArt"));
+const Dither = lazy(() => import("./pages/dither/Dither"));
+const DesignTokens = lazy(() => import("./pages/design-tokens/DesignTokens"));
+const TextStroke = lazy(() => import("./pages/text-stroke/TextStroke"));
+const Bento = lazy(() => import("./pages/bento/Bento"));
+const AsciiBanner = lazy(() => import("./pages/ascii-banner/AsciiBanner"));
+const ImageEffects = lazy(() => import("./pages/image-effects/ImageEffects"));
+const MaskedText = lazy(() => import("./pages/masked-text/MaskedText"));
+const QrLogo = lazy(() => import("./pages/qr-logo/QrLogo"));
+const NowPlaying = lazy(() => import("./pages/now-playing/NowPlaying"));
 
 function RouteFallback() {
   return (
@@ -87,10 +97,10 @@ function RouteFallback() {
   );
 }
 
-const SITE_TITLE = "toolbox — design & dev utilities";
+const SITE_TITLE = "toolbox - design & dev utilities";
 const SITE_URL = "https://toolbox.stepanblaha.com";
 const SITE_DESC =
-  "A collection of 55+ design and developer utilities — CSS generators, color tools, image tools, and IT utilities. Fast, free, and fully client-side.";
+  "A collection of 60+ design and developer utilities - CSS generators, color tools, image tools, and IT utilities. Fast, free, and fully client-side.";
 
 // Keep <head> tags in sync on client-side navigation (scrapers get the correct
 // values from prerendered per-route HTML; this handles in-app route changes).
@@ -198,6 +208,16 @@ function App() {
           <Route path="/tools/url-tool" element={<UrlTool />} />
           <Route path="/tools/text-stats" element={<TextStats />} />
           <Route path="/tools/aes" element={<Aes />} />
+          <Route path="/tools/ascii-art" element={<AsciiArt />} />
+          <Route path="/tools/dither" element={<Dither />} />
+          <Route path="/tools/design-tokens" element={<DesignTokens />} />
+          <Route path="/tools/text-stroke" element={<TextStroke />} />
+          <Route path="/tools/bento" element={<Bento />} />
+          <Route path="/tools/ascii-banner" element={<AsciiBanner />} />
+          <Route path="/tools/image-effects" element={<ImageEffects />} />
+          <Route path="/tools/masked-text" element={<MaskedText />} />
+          <Route path="/tools/qr-logo" element={<QrLogo />} />
+          <Route path="/tools/now-playing" element={<NowPlaying />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
