@@ -119,6 +119,36 @@ a {
   }
 }
 
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--info);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -48px;
+  left: 8px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: var(--fg);
+  color: var(--bg);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: 8px;
+  outline: 2px solid var(--info);
+  outline-offset: 2px;
+}
+
 /* theme toggle circular reveal: clip-path driven by JS in useTheme */
 ::view-transition-old(root),
 ::view-transition-new(root) {

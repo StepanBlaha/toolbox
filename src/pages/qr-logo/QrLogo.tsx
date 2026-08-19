@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type DragEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type DragEvent } from "react";
 import QRCodeStyling, { type DotType } from "qr-code-styling";
 import { Download, Image as ImageIcon, X } from "lucide-react";
 import { motion } from "framer-motion";
@@ -7,6 +7,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { usePasteImage } from "../../hooks/usePasteImage";
 import styles from "./QrLogo.module.css";
 
 type ErrorCorrectionLevel = "L" | "M" | "Q" | "H";
@@ -38,7 +39,7 @@ function QrLogo() {
   const [dragActive, setDragActive] = useState(false);
   const [error, setError] = useState("");
 
-  function readImageFile(file: File) {
+  const readImageFile = useCallback((file: File) => {
     if (!file.type.startsWith("image/")) {
       setError("Please choose an image file.");
       return;
@@ -52,7 +53,9 @@ function QrLogo() {
     };
     reader.onerror = () => setError("Could not read the image file.");
     reader.readAsDataURL(file);
-  }
+  }, []);
+
+  usePasteImage(readImageFile);
 
   function handleFileInput(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -240,7 +243,7 @@ function QrLogo() {
               ) : (
                 <div className={styles.dropzoneEmpty}>
                   <ImageIcon size={18} />
-                  <span>Click or drag an image here</span>
+                  <span>Click, drag, or paste an image here</span>
                 </div>
               )}
               <input

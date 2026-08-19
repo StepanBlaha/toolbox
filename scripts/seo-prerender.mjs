@@ -37,7 +37,27 @@ function replaceAttr(html, tagAttr, tagVal, contentAttr, newVal) {
   return html.replace(re, `$1${esc(newVal)}$2`);
 }
 
-function pageHtml(title, description, url) {
+function jsonLd(name, description, url) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name,
+    description,
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Any",
+    url,
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+  };
+  // Escape closing-script sequences so embedded strings can't break out of
+  // the <script> tag.
+  return JSON.stringify(data).replace(/</g, "\\u003c");
+}
+
+function pageHtml(title, description, url, name) {
   let html = template.replace(
     /<title>[\s\S]*?<\/title>/,
     `<title>${esc(title)}</title>`
@@ -49,6 +69,12 @@ function pageHtml(title, description, url) {
   html = replaceAttr(html, "property", "og:url", "content", url);
   html = replaceAttr(html, "name", "twitter:title", "content", title);
   html = replaceAttr(html, "name", "twitter:description", "content", description);
+  const ldScript = `<script type="application/ld+json">${jsonLd(
+    name,
+    description,
+    url
+  )}</script>\n</head>`;
+  html = html.replace(/<\/head>/, ldScript);
   return html;
 }
 
@@ -58,7 +84,7 @@ for (const t of tools) {
   const url = SITE_URL + t.path;
   const outDir = resolve(root, "dist" + t.path);
   mkdirSync(outDir, { recursive: true });
-  writeFileSync(resolve(outDir, "index.html"), pageHtml(title, t.description, url));
+  writeFileSync(resolve(outDir, "index.html"), pageHtml(title, t.description, url, t.name));
   count++;
 }
 

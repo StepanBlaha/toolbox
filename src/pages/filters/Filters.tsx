@@ -7,6 +7,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { usePasteImage } from "../../hooks/usePasteImage";
 import styles from "./Filters.module.css";
 
 interface FilterState {
@@ -104,6 +105,8 @@ export function Filters() {
     setImageSrc(url);
   }, []);
 
+  usePasteImage(loadFile);
+
   function handleFileInput(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (file) loadFile(file);
@@ -163,7 +166,7 @@ export function Filters() {
             }}
           >
             <Upload size={20} className={styles.dropIcon} />
-            <span className={styles.dropText}>Drop an image or click to upload</span>
+            <span className={styles.dropText}>Drop, click, or paste an image</span>
             <input
               ref={fileInputRef}
               type="file"

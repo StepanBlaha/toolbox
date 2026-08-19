@@ -7,6 +7,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { usePasteImage } from "../../hooks/usePasteImage";
 import styles from "./ImageCompressor.module.css";
 
 type OutputFormat = "image/jpeg" | "image/webp" | "image/png";
@@ -165,6 +166,8 @@ export function ImageCompressor() {
     [format, quality, runCompression, revokeCompressed, revokeSource]
   );
 
+  usePasteImage(loadFile);
+
   function handleFileInput(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (file) loadFile(file);
@@ -240,7 +243,7 @@ export function ImageCompressor() {
             }}
           >
             <Upload size={22} className={styles.dropIcon} />
-            <span className={styles.dropText}>Drop an image or click to upload</span>
+            <span className={styles.dropText}>Drop, click, or paste an image</span>
             <input
               ref={fileInputRef}
               type="file"

@@ -15,6 +15,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { usePasteImage } from "../../hooks/usePasteImage";
 import styles from "./NowPlaying.module.css";
 
 type BgMode = "solid" | "gradient" | "auto";
@@ -204,6 +205,8 @@ export function NowPlaying() {
     img.onerror = () => setError("Could not load that image.");
     img.src = url;
   }, []);
+
+  usePasteImage(loadFile);
 
   function handleFileInput(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -475,7 +478,7 @@ export function NowPlaying() {
               }}
             >
               <Upload size={18} />
-              <span>Drop an image or click to upload</span>
+              <span>Drop, click, or paste an image</span>
               <input
                 ref={fileInputRef}
                 type="file"

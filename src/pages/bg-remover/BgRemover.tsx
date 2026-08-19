@@ -18,6 +18,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { usePasteImage } from "../../hooks/usePasteImage";
 import styles from "./BgRemover.module.css";
 
 type Status = "idle" | "processing" | "done" | "error";
@@ -155,6 +156,8 @@ export default function BgRemover() {
     setHasCompletedOnce(false);
   }, []);
 
+  usePasteImage(loadFile);
+
   function handleFileInput(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (file) loadFile(file);
@@ -280,7 +283,7 @@ export default function BgRemover() {
             >
               <Upload size={20} className={styles.dropzoneIcon} />
               <span className={styles.dropzoneText}>
-                Drop an image or click to upload
+                Drop, click, or paste an image
               </span>
             </div>
 

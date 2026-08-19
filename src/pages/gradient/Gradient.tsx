@@ -6,6 +6,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { useUrlState } from "../../hooks/useUrlState";
 import styles from "./Gradient.module.css";
 
 type GradientType = "linear" | "radial" | "conic";
@@ -123,17 +124,28 @@ function composeGradient(
   return `conic-gradient(from ${angle}deg at ${posX}% ${posY}%, ${stopsCss})`;
 }
 
+interface GradientState {
+  type: GradientType;
+  angle: number;
+  shape: RadialShape;
+  posX: number;
+  posY: number;
+  stops: ColorStop[];
+}
+
+const DEFAULT_STATE: GradientState = {
+  type: "linear",
+  angle: 90,
+  shape: "circle",
+  posX: 50,
+  posY: 50,
+  stops: [makeStop("#3b82f6", 0), makeStop("#8b5cf6", 100)],
+};
+
 export function Gradient() {
   const ready = useRevealReady();
-  const [type, setType] = useState<GradientType>("linear");
-  const [angle, setAngle] = useState(90);
-  const [shape, setShape] = useState<RadialShape>("circle");
-  const [posX, setPosX] = useState(50);
-  const [posY, setPosY] = useState(50);
-  const [stops, setStops] = useState<ColorStop[]>([
-    makeStop("#3b82f6", 0),
-    makeStop("#8b5cf6", 100),
-  ]);
+  const [state, setState] = useUrlState<GradientState>(DEFAULT_STATE);
+  const { type, angle, shape, posX, posY, stops } = state;
   const [copied, setCopied] = useState(false);
 
   const composed = useMemo(
@@ -143,27 +155,56 @@ export function Gradient() {
 
   const cssText = `background: ${composed};`;
 
+  function setType(type: GradientType) {
+    setState((prev) => ({ ...prev, type }));
+  }
+
+  function setAngle(angle: number) {
+    setState((prev) => ({ ...prev, angle }));
+  }
+
+  function setShape(shape: RadialShape) {
+    setState((prev) => ({ ...prev, shape }));
+  }
+
+  function setPosX(posX: number) {
+    setState((prev) => ({ ...prev, posX }));
+  }
+
+  function setPosY(posY: number) {
+    setState((prev) => ({ ...prev, posY }));
+  }
+
   function updateStop(id: string, patch: Partial<ColorStop>) {
-    setStops((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, ...patch } : s))
-    );
+    setState((prev) => ({
+      ...prev,
+      stops: prev.stops.map((s) => (s.id === id ? { ...s, ...patch } : s)),
+    }));
   }
 
   function addStop() {
-    setStops((prev) => [...prev, makeStop(randomHex(), 50)]);
+    setState((prev) => ({
+      ...prev,
+      stops: [...prev.stops, makeStop(randomHex(), 50)],
+    }));
   }
 
   function removeStop(id: string) {
-    setStops((prev) => prev.filter((s) => s.id !== id));
+    setState((prev) => ({
+      ...prev,
+      stops: prev.stops.filter((s) => s.id !== id),
+    }));
   }
 
   function applyPreset(preset: Preset) {
-    setType(preset.type);
-    setAngle(preset.angle);
-    setShape(preset.shape);
-    setPosX(preset.posX);
-    setPosY(preset.posY);
-    setStops(preset.stops.map((s) => makeStop(s.color, s.position)));
+    setState({
+      type: preset.type,
+      angle: preset.angle,
+      shape: preset.shape,
+      posX: preset.posX,
+      posY: preset.posY,
+      stops: preset.stops.map((s) => makeStop(s.color, s.position)),
+    });
   }
 
   function randomize() {
@@ -174,10 +215,13 @@ export function Gradient() {
         makeStop(randomHex(), Math.round((i / (count - 1 || 1)) * 100))
       );
     }
-    setStops(next);
-    setAngle(Math.floor(Math.random() * 360));
-    setPosX(Math.floor(Math.random() * 100));
-    setPosY(Math.floor(Math.random() * 100));
+    setState((prev) => ({
+      ...prev,
+      stops: next,
+      angle: Math.floor(Math.random() * 360),
+      posX: Math.floor(Math.random() * 100),
+      posY: Math.floor(Math.random() * 100),
+    }));
   }
 
   async function copy() {

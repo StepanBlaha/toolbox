@@ -6,6 +6,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { useUrlState } from "../../hooks/useUrlState";
 import styles from "./Glass.module.css";
 
 interface Scene {
@@ -49,16 +50,60 @@ function hexToRgb(hex: string): { r: number; g: number; b: number } {
   };
 }
 
+interface GlassState {
+  blur: number;
+  transparency: number;
+  saturation: number;
+  radius: number;
+  borderAlpha: number;
+  tint: string;
+  sceneId: string;
+}
+
+const DEFAULT_STATE: GlassState = {
+  blur: 12,
+  transparency: 0.25,
+  saturation: 140,
+  radius: 20,
+  borderAlpha: 0.3,
+  tint: "#ffffff",
+  sceneId: SCENES[0].id,
+};
+
 function Glass() {
   const ready = useRevealReady();
-  const [blur, setBlur] = useState(12);
-  const [transparency, setTransparency] = useState(0.25);
-  const [saturation, setSaturation] = useState(140);
-  const [radius, setRadius] = useState(20);
-  const [borderAlpha, setBorderAlpha] = useState(0.3);
-  const [tint, setTint] = useState("#ffffff");
-  const [sceneId, setSceneId] = useState(SCENES[0].id);
+  const [state, setState] = useUrlState<GlassState>(DEFAULT_STATE);
+  const { blur, transparency, saturation, radius, borderAlpha, tint, sceneId } =
+    state;
   const [copied, setCopied] = useState(false);
+
+  function setBlur(blur: number) {
+    setState((prev) => ({ ...prev, blur }));
+  }
+
+  function setTransparency(transparency: number) {
+    setState((prev) => ({ ...prev, transparency }));
+  }
+
+  function setSaturation(saturation: number) {
+    setState((prev) => ({ ...prev, saturation }));
+  }
+
+  function setRadius(radius: number) {
+    setState((prev) => ({ ...prev, radius }));
+  }
+
+  function setBorderAlpha(borderAlpha: number) {
+    setState((prev) => ({ ...prev, borderAlpha }));
+  }
+
+  function setTint(tint: string) {
+    setState((prev) => ({ ...prev, tint }));
+  }
+
+  function setSceneId(sceneId: string) {
+    setState((prev) => ({ ...prev, sceneId }));
+  }
 
   const scene = useMemo(
     () => SCENES.find((s) => s.id === sceneId) ?? SCENES[0],

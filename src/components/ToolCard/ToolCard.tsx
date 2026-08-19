@@ -34,7 +34,7 @@ export function ToolCard({ tool }: ToolCardProps) {
   if (tool.status === "ready") {
     return (
       <motion.div variants={revealBlock}>
-        <Link to={tool.path} className={styles.card}>
+        <Link to={tool.path} className={styles.card} aria-label={tool.name}>
           <span className={styles.cornerArrow}>
             <ArrowUpRight size={16} strokeWidth={1.75} />
           </span>
@@ -46,7 +46,13 @@ export function ToolCard({ tool }: ToolCardProps) {
 
   return (
     <motion.div variants={revealBlock}>
-      <div className={clsx(styles.card, styles.soon)}>{content}</div>
+      <div
+        className={clsx(styles.card, styles.soon)}
+        aria-disabled="true"
+        aria-label={`${tool.name} (coming soon)`}
+      >
+        {content}
+      </div>
     </motion.div>
   );
 }

@@ -6,6 +6,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { useUrlState } from "../../hooks/useUrlState";
 import styles from "./BoxShadow.module.css";
 
 interface ShadowLayer {
@@ -47,11 +48,22 @@ function layerToCss(layer: ShadowLayer): string {
   return `${inset}${layer.x}px ${layer.y}px ${layer.blur}px ${layer.spread}px ${color}`;
 }
 
+interface BoxShadowState {
+  layers: ShadowLayer[];
+  radius: number;
+  boxColor: string;
+}
+
+const DEFAULT_STATE: BoxShadowState = {
+  layers: [makeLayer()],
+  radius: 12,
+  boxColor: "#f4f4f5",
+};
+
 export function BoxShadow() {
   const ready = useRevealReady();
-  const [layers, setLayers] = useState<ShadowLayer[]>([makeLayer()]);
-  const [radius, setRadius] = useState(12);
-  const [boxColor, setBoxColor] = useState("#f4f4f5");
+  const [state, setState] = useUrlState<BoxShadowState>(DEFAULT_STATE);
+  const { layers, radius, boxColor } = state;
   const [copied, setCopied] = useState(false);
 
   const composed = useMemo(
@@ -61,18 +73,30 @@ export function BoxShadow() {
 
   const cssText = `box-shadow: ${composed};`;
 
+  function setRadius(radius: number) {
+    setState((prev) => ({ ...prev, radius }));
+  }
+
+  function setBoxColor(boxColor: string) {
+    setState((prev) => ({ ...prev, boxColor }));
+  }
+
   function updateLayer(id: string, patch: Partial<ShadowLayer>) {
-    setLayers((prev) =>
-      prev.map((l) => (l.id === id ? { ...l, ...patch } : l))
-    );
+    setState((prev) => ({
+      ...prev,
+      layers: prev.layers.map((l) => (l.id === id ? { ...l, ...patch } : l)),
+    }));
   }
 
   function addLayer() {
-    setLayers((prev) => [...prev, makeLayer()]);
+    setState((prev) => ({ ...prev, layers: [...prev.layers, makeLayer()] }));
   }
 
   function removeLayer(id: string) {
-    setLayers((prev) => prev.filter((l) => l.id !== id));
+    setState((prev) => ({
+      ...prev,
+      layers: prev.layers.filter((l) => l.id !== id),
+    }));
   }
 
   async function copy() {

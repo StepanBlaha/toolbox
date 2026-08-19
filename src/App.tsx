@@ -1,12 +1,14 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { RevealReadyProvider } from "./context/RevealReadyContext";
+import { ToastProvider } from "./context/ToastContext";
 import { useTheme } from "./hooks/useTheme";
 import { tools } from "./data/tools";
 import Preloader from "./components/Preloader/Preloader";
 import GridFrame from "./components/GridFrame/GridFrame";
 import Cursor from "./components/Cursor/Cursor";
 import TopNav from "./components/TopNav/TopNav";
+import { CommandPalette } from "./components/CommandPalette/CommandPalette";
 import { Landing } from "./pages/landing/Landing";
 import { NotFound } from "./pages/not-found/NotFound";
 
@@ -145,83 +147,91 @@ function App() {
   usePageSeo();
 
   return (
-    <RevealReadyProvider ready={ready}>
-      <Preloader onDone={() => setReady(true)} />
-      <GridFrame />
-      <Cursor />
-      <TopNav theme={theme} onToggle={toggle} />
-      <Suspense fallback={<RouteFallback />}>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/tools/box-shadow" element={<BoxShadow />} />
-          <Route path="/tools/contrast" element={<Contrast />} />
-          <Route path="/tools/gradient" element={<Gradient />} />
-          <Route path="/tools/border-radius" element={<BorderRadius />} />
-          <Route path="/tools/palette" element={<Palette />} />
-          <Route path="/tools/bg-remover" element={<BgRemover />} />
-          <Route path="/tools/grid" element={<Grid />} />
-          <Route path="/tools/flexbox" element={<Flexbox />} />
-          <Route path="/tools/easing" element={<Easing />} />
-          <Route path="/tools/color-converter" element={<ColorConverter />} />
-          <Route path="/tools/filters" element={<Filters />} />
-          <Route path="/tools/waves" element={<Waves />} />
-          <Route path="/tools/blob" element={<Blob />} />
-          <Route path="/tools/glass" element={<Glass />} />
-          <Route path="/tools/clip-path" element={<ClipPath />} />
-          <Route path="/tools/neumorphism" element={<Neumorphism />} />
-          <Route path="/tools/text-shadow" element={<TextShadow />} />
-          <Route path="/tools/keyframes" element={<Keyframes />} />
-          <Route path="/tools/color-palette" element={<ColorPalette />} />
-          <Route path="/tools/image-compressor" element={<ImageCompressor />} />
-          <Route path="/tools/duotone" element={<Duotone />} />
-          <Route path="/tools/svg-encoder" element={<SvgEncoder />} />
-          <Route path="/tools/scrollbar" element={<Scrollbar />} />
-          <Route path="/tools/unit-converter" element={<UnitConverter />} />
-          <Route path="/tools/json-formatter" element={<JsonFormatter />} />
-          <Route path="/tools/qr-code" element={<QrCode />} />
-          <Route path="/tools/grainient" element={<Grainient />} />
-          <Route path="/tools/mesh-gradient" element={<MeshGradient />} />
-          <Route path="/tools/noise" element={<NoiseTexture />} />
-          <Route path="/tools/pattern" element={<Pattern />} />
-          <Route path="/tools/gradient-text" element={<GradientText />} />
-          <Route path="/tools/gradient-border" element={<GradientBorder />} />
-          <Route path="/tools/loaders" element={<Loaders />} />
-          <Route path="/tools/transform-3d" element={<Transform3D />} />
-          <Route path="/tools/shape" element={<ShapeGen />} />
-          <Route path="/tools/font-pairing" element={<FontPairing />} />
-          <Route path="/tools/type-scale" element={<TypeScale />} />
-          <Route path="/tools/lorem" element={<Lorem />} />
-          <Route path="/tools/uuid" element={<Uuid />} />
-          <Route path="/tools/password" element={<Password />} />
-          <Route path="/tools/hash" element={<Hash />} />
-          <Route path="/tools/base64" element={<Base64 />} />
-          <Route path="/tools/jwt" element={<Jwt />} />
-          <Route path="/tools/case-converter" element={<CaseConverter />} />
-          <Route path="/tools/regex" element={<Regex />} />
-          <Route path="/tools/favicon" element={<FaviconGen />} />
-          <Route path="/tools/og-image" element={<OgImage />} />
-          <Route path="/tools/diff" element={<DiffChecker />} />
-          <Route path="/tools/cron" element={<Cron />} />
-          <Route path="/tools/timestamp" element={<Timestamp />} />
-          <Route path="/tools/base-converter" element={<BaseConverter />} />
-          <Route path="/tools/meta-tags" element={<MetaTags />} />
-          <Route path="/tools/url-tool" element={<UrlTool />} />
-          <Route path="/tools/text-stats" element={<TextStats />} />
-          <Route path="/tools/aes" element={<Aes />} />
-          <Route path="/tools/ascii-art" element={<AsciiArt />} />
-          <Route path="/tools/dither" element={<Dither />} />
-          <Route path="/tools/design-tokens" element={<DesignTokens />} />
-          <Route path="/tools/text-stroke" element={<TextStroke />} />
-          <Route path="/tools/bento" element={<Bento />} />
-          <Route path="/tools/ascii-banner" element={<AsciiBanner />} />
-          <Route path="/tools/image-effects" element={<ImageEffects />} />
-          <Route path="/tools/masked-text" element={<MaskedText />} />
-          <Route path="/tools/qr-logo" element={<QrLogo />} />
-          <Route path="/tools/now-playing" element={<NowPlaying />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
-    </RevealReadyProvider>
+    <ToastProvider>
+      <RevealReadyProvider ready={ready}>
+        <a className="skip-link" href="#main">
+          Skip to content
+        </a>
+        <Preloader onDone={() => setReady(true)} />
+        <GridFrame />
+        <Cursor />
+        <TopNav theme={theme} onToggle={toggle} />
+        <CommandPalette />
+        <Suspense fallback={<RouteFallback />}>
+          <main id="main">
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/tools/box-shadow" element={<BoxShadow />} />
+              <Route path="/tools/contrast" element={<Contrast />} />
+              <Route path="/tools/gradient" element={<Gradient />} />
+              <Route path="/tools/border-radius" element={<BorderRadius />} />
+              <Route path="/tools/palette" element={<Palette />} />
+              <Route path="/tools/bg-remover" element={<BgRemover />} />
+              <Route path="/tools/grid" element={<Grid />} />
+              <Route path="/tools/flexbox" element={<Flexbox />} />
+              <Route path="/tools/easing" element={<Easing />} />
+              <Route path="/tools/color-converter" element={<ColorConverter />} />
+              <Route path="/tools/filters" element={<Filters />} />
+              <Route path="/tools/waves" element={<Waves />} />
+              <Route path="/tools/blob" element={<Blob />} />
+              <Route path="/tools/glass" element={<Glass />} />
+              <Route path="/tools/clip-path" element={<ClipPath />} />
+              <Route path="/tools/neumorphism" element={<Neumorphism />} />
+              <Route path="/tools/text-shadow" element={<TextShadow />} />
+              <Route path="/tools/keyframes" element={<Keyframes />} />
+              <Route path="/tools/color-palette" element={<ColorPalette />} />
+              <Route path="/tools/image-compressor" element={<ImageCompressor />} />
+              <Route path="/tools/duotone" element={<Duotone />} />
+              <Route path="/tools/svg-encoder" element={<SvgEncoder />} />
+              <Route path="/tools/scrollbar" element={<Scrollbar />} />
+              <Route path="/tools/unit-converter" element={<UnitConverter />} />
+              <Route path="/tools/json-formatter" element={<JsonFormatter />} />
+              <Route path="/tools/qr-code" element={<QrCode />} />
+              <Route path="/tools/grainient" element={<Grainient />} />
+              <Route path="/tools/mesh-gradient" element={<MeshGradient />} />
+              <Route path="/tools/noise" element={<NoiseTexture />} />
+              <Route path="/tools/pattern" element={<Pattern />} />
+              <Route path="/tools/gradient-text" element={<GradientText />} />
+              <Route path="/tools/gradient-border" element={<GradientBorder />} />
+              <Route path="/tools/loaders" element={<Loaders />} />
+              <Route path="/tools/transform-3d" element={<Transform3D />} />
+              <Route path="/tools/shape" element={<ShapeGen />} />
+              <Route path="/tools/font-pairing" element={<FontPairing />} />
+              <Route path="/tools/type-scale" element={<TypeScale />} />
+              <Route path="/tools/lorem" element={<Lorem />} />
+              <Route path="/tools/uuid" element={<Uuid />} />
+              <Route path="/tools/password" element={<Password />} />
+              <Route path="/tools/hash" element={<Hash />} />
+              <Route path="/tools/base64" element={<Base64 />} />
+              <Route path="/tools/jwt" element={<Jwt />} />
+              <Route path="/tools/case-converter" element={<CaseConverter />} />
+              <Route path="/tools/regex" element={<Regex />} />
+              <Route path="/tools/favicon" element={<FaviconGen />} />
+              <Route path="/tools/og-image" element={<OgImage />} />
+              <Route path="/tools/diff" element={<DiffChecker />} />
+              <Route path="/tools/cron" element={<Cron />} />
+              <Route path="/tools/timestamp" element={<Timestamp />} />
+              <Route path="/tools/base-converter" element={<BaseConverter />} />
+              <Route path="/tools/meta-tags" element={<MetaTags />} />
+              <Route path="/tools/url-tool" element={<UrlTool />} />
+              <Route path="/tools/text-stats" element={<TextStats />} />
+              <Route path="/tools/aes" element={<Aes />} />
+              <Route path="/tools/ascii-art" element={<AsciiArt />} />
+              <Route path="/tools/dither" element={<Dither />} />
+              <Route path="/tools/design-tokens" element={<DesignTokens />} />
+              <Route path="/tools/text-stroke" element={<TextStroke />} />
+              <Route path="/tools/bento" element={<Bento />} />
+              <Route path="/tools/ascii-banner" element={<AsciiBanner />} />
+              <Route path="/tools/image-effects" element={<ImageEffects />} />
+              <Route path="/tools/masked-text" element={<MaskedText />} />
+              <Route path="/tools/qr-logo" element={<QrLogo />} />
+              <Route path="/tools/now-playing" element={<NowPlaying />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
+        </Suspense>
+      </RevealReadyProvider>
+    </ToastProvider>
   );
 }
 

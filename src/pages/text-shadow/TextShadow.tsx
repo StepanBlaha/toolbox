@@ -6,6 +6,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { useUrlState } from "../../hooks/useUrlState";
 import styles from "./TextShadow.module.css";
 
 interface ShadowLayer {
@@ -44,13 +45,26 @@ function layerToCss(layer: ShadowLayer): string {
 
 const weightOptions = [400, 600, 700, 800] as const;
 
+interface TextShadowState {
+  layers: ShadowLayer[];
+  text: string;
+  fontSize: number;
+  fontWeight: number;
+  textColor: string;
+}
+
+const DEFAULT_STATE: TextShadowState = {
+  layers: [makeLayer()],
+  text: "Toolbox",
+  fontSize: 64,
+  fontWeight: 700,
+  textColor: "#09090b",
+};
+
 export function TextShadow() {
   const ready = useRevealReady();
-  const [layers, setLayers] = useState<ShadowLayer[]>([makeLayer()]);
-  const [text, setText] = useState("Toolbox");
-  const [fontSize, setFontSize] = useState(64);
-  const [fontWeight, setFontWeight] = useState<number>(700);
-  const [textColor, setTextColor] = useState("#09090b");
+  const [state, setState] = useUrlState<TextShadowState>(DEFAULT_STATE);
+  const { layers, text, fontSize, fontWeight, textColor } = state;
   const [copied, setCopied] = useState(false);
 
   const composed = useMemo(
@@ -63,18 +77,38 @@ color: ${textColor};
 font-size: ${fontSize}px;
 font-weight: ${fontWeight};`;
 
+  function setText(text: string) {
+    setState((prev) => ({ ...prev, text }));
+  }
+
+  function setFontSize(fontSize: number) {
+    setState((prev) => ({ ...prev, fontSize }));
+  }
+
+  function setFontWeight(fontWeight: number) {
+    setState((prev) => ({ ...prev, fontWeight }));
+  }
+
+  function setTextColor(textColor: string) {
+    setState((prev) => ({ ...prev, textColor }));
+  }
+
   function updateLayer(id: string, patch: Partial<ShadowLayer>) {
-    setLayers((prev) =>
-      prev.map((l) => (l.id === id ? { ...l, ...patch } : l))
-    );
+    setState((prev) => ({
+      ...prev,
+      layers: prev.layers.map((l) => (l.id === id ? { ...l, ...patch } : l)),
+    }));
   }
 
   function addLayer() {
-    setLayers((prev) => [...prev, makeLayer()]);
+    setState((prev) => ({ ...prev, layers: [...prev.layers, makeLayer()] }));
   }
 
   function removeLayer(id: string) {
-    setLayers((prev) => prev.filter((l) => l.id !== id));
+    setState((prev) => ({
+      ...prev,
+      layers: prev.layers.filter((l) => l.id !== id),
+    }));
   }
 
   async function copy() {

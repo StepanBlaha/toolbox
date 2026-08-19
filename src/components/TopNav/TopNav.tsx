@@ -31,7 +31,7 @@ export default function TopNav({
   onToggle: (e?: MouseEvent) => void;
 }) {
   return (
-    <nav className={styles.nav}>
+    <nav className={styles.nav} aria-label="Primary">
       <Link to="/" className={styles.brand} aria-label="SB toolbox - home">
         <span className={styles.mark}>SB toolbox</span>
       </Link>

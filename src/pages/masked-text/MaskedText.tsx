@@ -7,6 +7,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { usePasteImage } from "../../hooks/usePasteImage";
 import styles from "./MaskedText.module.css";
 
 type SourceType = "image" | "gradient";
@@ -150,6 +151,8 @@ export function MaskedText() {
       if (objectUrlRef.current) URL.revokeObjectURL(objectUrlRef.current);
     };
   }, []);
+
+  usePasteImage(loadFile, sourceType === "image");
 
   function handleFileInput(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -434,7 +437,7 @@ export function MaskedText() {
               >
                 <Upload size={20} className={styles.dropIcon} />
                 <span className={styles.dropText}>
-                  {imageSrc ? "Replace image" : "Drop an image or click to upload"}
+                  {imageSrc ? "Replace image" : "Drop, click, or paste an image"}
                 </span>
                 <input
                   ref={fileInputRef}

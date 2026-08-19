@@ -6,6 +6,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { useUrlState } from "../../hooks/useUrlState";
 import styles from "./MeshGradient.module.css";
 
 interface MeshPoint {
@@ -42,15 +43,24 @@ function pointToGradient(point: MeshPoint): string {
   )}%, ${point.color}, transparent 55%)`;
 }
 
+interface MeshGradientState {
+  points: MeshPoint[];
+  baseColor: string;
+}
+
+function makeDefaultState(): MeshGradientState {
+  return {
+    points: [makePoint(0), makePoint(1), makePoint(2), makePoint(3)],
+    baseColor: "#0f172a",
+  };
+}
+
 export default function MeshGradient() {
   const ready = useRevealReady();
-  const [points, setPoints] = useState<MeshPoint[]>(() => [
-    makePoint(0),
-    makePoint(1),
-    makePoint(2),
-    makePoint(3),
-  ]);
-  const [baseColor, setBaseColor] = useState("#0f172a");
+  const [state, setState] = useUrlState<MeshGradientState>(
+    makeDefaultState()
+  );
+  const { points, baseColor } = state;
   const [copied, setCopied] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
   const draggingId = useRef<string | null>(null);
@@ -62,40 +72,48 @@ export default function MeshGradient() {
 
   const cssText = `background-color: ${baseColor};\nbackground-image: ${backgroundImage};`;
 
+  function setBaseColor(baseColor: string) {
+    setState((prev) => ({ ...prev, baseColor }));
+  }
+
   function updatePoint(id: string, patch: Partial<MeshPoint>) {
-    setPoints((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, ...patch } : p))
-    );
+    setState((prev) => ({
+      ...prev,
+      points: prev.points.map((p) => (p.id === id ? { ...p, ...patch } : p)),
+    }));
   }
 
   function addPoint() {
-    setPoints((prev) =>
-      prev.length >= MAX_POINTS ? prev : [...prev, makePoint(prev.length)]
+    setState((prev) =>
+      prev.points.length >= MAX_POINTS
+        ? prev
+        : { ...prev, points: [...prev.points, makePoint(prev.points.length)] }
     );
   }
 
   function removePoint(id: string) {
-    setPoints((prev) =>
-      prev.length <= MIN_POINTS ? prev : prev.filter((p) => p.id !== id)
+    setState((prev) =>
+      prev.points.length <= MIN_POINTS
+        ? prev
+        : { ...prev, points: prev.points.filter((p) => p.id !== id) }
     );
   }
 
   function randomize() {
-    setPoints((prev) =>
-      prev.map((p) => ({
+    setState((prev) => ({
+      ...prev,
+      points: prev.points.map((p) => ({
         ...p,
         x: Math.round(Math.random() * 100),
         y: Math.round(Math.random() * 100),
         color:
           DEFAULT_COLORS[Math.floor(Math.random() * DEFAULT_COLORS.length)] ??
           p.color,
-      }))
-    );
-    setBaseColor(
-      `#${Math.floor(Math.random() * 0xffffff)
+      })),
+      baseColor: `#${Math.floor(Math.random() * 0xffffff)
         .toString(16)
-        .padStart(6, "0")}`
-    );
+        .padStart(6, "0")}`,
+    }));
   }
 
   const setPointFromPointer = useCallback((id: string, clientX: number, clientY: number) => {
