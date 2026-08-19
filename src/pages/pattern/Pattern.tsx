@@ -6,6 +6,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { useUrlState } from "../../hooks/useUrlState";
 import styles from "./Pattern.module.css";
 
 type PatternType =
@@ -95,15 +96,53 @@ function composedToCss(c: Composed): string {
   return lines.join("\n");
 }
 
+interface PatternState {
+  type: PatternType;
+  fg: string;
+  bg: string;
+  size: number;
+  thickness: number;
+  angle: number;
+}
+
+const DEFAULT_STATE: PatternState = {
+  type: "stripes",
+  fg: "#09090b",
+  bg: "#fafafa",
+  size: 40,
+  thickness: 8,
+  angle: 45,
+};
+
 export function Pattern() {
   const ready = useRevealReady();
-  const [type, setType] = useState<PatternType>("stripes");
-  const [fg, setFg] = useState("#09090b");
-  const [bg, setBg] = useState("#fafafa");
-  const [size, setSize] = useState(40);
-  const [thickness, setThickness] = useState(8);
-  const [angle, setAngle] = useState(45);
+  const [state, setState] = useUrlState<PatternState>(DEFAULT_STATE);
+  const { type, fg, bg, size, thickness, angle } = state;
   const [copied, setCopied] = useState(false);
+
+  function setType(type: PatternType) {
+    setState((prev) => ({ ...prev, type }));
+  }
+
+  function setFg(fg: string) {
+    setState((prev) => ({ ...prev, fg }));
+  }
+
+  function setBg(bg: string) {
+    setState((prev) => ({ ...prev, bg }));
+  }
+
+  function setSize(size: number) {
+    setState((prev) => ({ ...prev, size }));
+  }
+
+  function setThickness(thickness: number) {
+    setState((prev) => ({ ...prev, thickness }));
+  }
+
+  function setAngle(angle: number) {
+    setState((prev) => ({ ...prev, angle }));
+  }
 
   const def = useMemo(() => PATTERNS.find((p) => p.id === type)!, [type]);
 

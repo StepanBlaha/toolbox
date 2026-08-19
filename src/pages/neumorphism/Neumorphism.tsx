@@ -6,6 +6,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { useUrlState } from "../../hooks/useUrlState";
 import styles from "./Neumorphism.module.css";
 
 type Shape = "flat" | "concave" | "convex" | "pressed";
@@ -48,16 +49,59 @@ function shade(hex: string, amount: number): string {
   return rgbToHex(mix(r), mix(g), mix(b));
 }
 
+interface NeumorphismState {
+  baseColor: string;
+  size: number;
+  radius: number;
+  distance: number;
+  blur: number;
+  blurLinked: boolean;
+  shape: Shape;
+}
+
+const DEFAULT_STATE: NeumorphismState = {
+  baseColor: "#e0e0e0",
+  size: 160,
+  radius: 24,
+  distance: 20,
+  blur: 40,
+  blurLinked: true,
+  shape: "flat",
+};
+
 export default function Neumorphism() {
   const ready = useRevealReady();
-  const [baseColor, setBaseColor] = useState("#e0e0e0");
-  const [size, setSize] = useState(160);
-  const [radius, setRadius] = useState(24);
-  const [distance, setDistance] = useState(20);
-  const [blur, setBlur] = useState(40);
-  const [blurLinked, setBlurLinked] = useState(true);
-  const [shape, setShape] = useState<Shape>("flat");
+  const [state, setState] = useUrlState<NeumorphismState>(DEFAULT_STATE);
+  const { baseColor, size, radius, distance, blur, blurLinked, shape } = state;
   const [copied, setCopied] = useState(false);
+
+  function setBaseColor(baseColor: string) {
+    setState((prev) => ({ ...prev, baseColor }));
+  }
+
+  function setSize(size: number) {
+    setState((prev) => ({ ...prev, size }));
+  }
+
+  function setRadius(radius: number) {
+    setState((prev) => ({ ...prev, radius }));
+  }
+
+  function setDistance(distance: number) {
+    setState((prev) => ({ ...prev, distance }));
+  }
+
+  function setBlur(blur: number) {
+    setState((prev) => ({ ...prev, blur }));
+  }
+
+  function setBlurLinked(blurLinked: boolean) {
+    setState((prev) => ({ ...prev, blurLinked }));
+  }
+
+  function setShape(shape: Shape) {
+    setState((prev) => ({ ...prev, shape }));
+  }
 
   const darkColor = useMemo(() => shade(baseColor, -0.15), [baseColor]);
   const lightColor = useMemo(() => shade(baseColor, 0.15), [baseColor]);

@@ -6,6 +6,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { useUrlState } from "../../hooks/useUrlState";
 import styles from "./TextStroke.module.css";
 
 type Technique = "native" | "layered";
@@ -31,24 +32,104 @@ function layeredStrokeShadows(width: number, color: string): string[] {
   });
 }
 
+interface TextStrokeState {
+  text: string;
+  fontSize: number;
+  fontWeight: number;
+  fillColor: string;
+  strokeColor: string;
+  strokeWidth: number;
+  technique: Technique;
+  dropEnabled: boolean;
+  dropColor: string;
+  dropX: number;
+  dropY: number;
+  dropBlur: number;
+}
+
+const DEFAULT_STATE: TextStrokeState = {
+  text: "OUTLINE",
+  fontSize: 96,
+  fontWeight: 800,
+  fillColor: "#ffffff",
+  strokeColor: "#09090b",
+  strokeWidth: 3,
+  technique: "native",
+  dropEnabled: false,
+  dropColor: "#09090b",
+  dropX: 4,
+  dropY: 4,
+  dropBlur: 6,
+};
+
 export function TextStroke() {
   const ready = useRevealReady();
 
-  const [text, setText] = useState("OUTLINE");
-  const [fontSize, setFontSize] = useState(96);
-  const [fontWeight, setFontWeight] = useState<number>(800);
-  const [fillColor, setFillColor] = useState("#ffffff");
-  const [strokeColor, setStrokeColor] = useState("#09090b");
-  const [strokeWidth, setStrokeWidth] = useState(3);
-  const [technique, setTechnique] = useState<Technique>("native");
-
-  const [dropEnabled, setDropEnabled] = useState(false);
-  const [dropColor, setDropColor] = useState("#09090b");
-  const [dropX, setDropX] = useState(4);
-  const [dropY, setDropY] = useState(4);
-  const [dropBlur, setDropBlur] = useState(6);
+  const [state, setState] = useUrlState<TextStrokeState>(DEFAULT_STATE);
+  const {
+    text,
+    fontSize,
+    fontWeight,
+    fillColor,
+    strokeColor,
+    strokeWidth,
+    technique,
+    dropEnabled,
+    dropColor,
+    dropX,
+    dropY,
+    dropBlur,
+  } = state;
 
   const [copied, setCopied] = useState(false);
+
+  function setText(text: string) {
+    setState((prev) => ({ ...prev, text }));
+  }
+
+  function setFontSize(fontSize: number) {
+    setState((prev) => ({ ...prev, fontSize }));
+  }
+
+  function setFontWeight(fontWeight: number) {
+    setState((prev) => ({ ...prev, fontWeight }));
+  }
+
+  function setFillColor(fillColor: string) {
+    setState((prev) => ({ ...prev, fillColor }));
+  }
+
+  function setStrokeColor(strokeColor: string) {
+    setState((prev) => ({ ...prev, strokeColor }));
+  }
+
+  function setStrokeWidth(strokeWidth: number) {
+    setState((prev) => ({ ...prev, strokeWidth }));
+  }
+
+  function setTechnique(technique: Technique) {
+    setState((prev) => ({ ...prev, technique }));
+  }
+
+  function setDropEnabled(dropEnabled: boolean) {
+    setState((prev) => ({ ...prev, dropEnabled }));
+  }
+
+  function setDropColor(dropColor: string) {
+    setState((prev) => ({ ...prev, dropColor }));
+  }
+
+  function setDropX(dropX: number) {
+    setState((prev) => ({ ...prev, dropX }));
+  }
+
+  function setDropY(dropY: number) {
+    setState((prev) => ({ ...prev, dropY }));
+  }
+
+  function setDropBlur(dropBlur: number) {
+    setState((prev) => ({ ...prev, dropBlur }));
+  }
 
   const dropShadow = useMemo(
     () => (dropEnabled ? `${dropX}px ${dropY}px ${dropBlur}px ${dropColor}` : null),

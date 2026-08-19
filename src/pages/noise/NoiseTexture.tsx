@@ -6,6 +6,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { useUrlState } from "../../hooks/useUrlState";
 import styles from "./NoiseTexture.module.css";
 
 type NoiseType = "fractalNoise" | "turbulence";
@@ -53,13 +54,46 @@ function CopyBlock({ label, text }: { label: string; text: string }) {
   );
 }
 
+interface NoiseTextureState {
+  baseFrequency: number;
+  numOctaves: number;
+  type: NoiseType;
+  opacity: number;
+  baseColor: string;
+}
+
+const DEFAULT_STATE: NoiseTextureState = {
+  baseFrequency: 0.65,
+  numOctaves: 3,
+  type: "fractalNoise",
+  opacity: 0.4,
+  baseColor: "#f4f4f5",
+};
+
 export function NoiseTexture() {
   const ready = useRevealReady();
-  const [baseFrequency, setBaseFrequency] = useState(0.65);
-  const [numOctaves, setNumOctaves] = useState(3);
-  const [type, setType] = useState<NoiseType>("fractalNoise");
-  const [opacity, setOpacity] = useState(0.4);
-  const [baseColor, setBaseColor] = useState("#f4f4f5");
+  const [state, setState] = useUrlState<NoiseTextureState>(DEFAULT_STATE);
+  const { baseFrequency, numOctaves, type, opacity, baseColor } = state;
+
+  function setBaseFrequency(baseFrequency: number) {
+    setState((prev) => ({ ...prev, baseFrequency }));
+  }
+
+  function setNumOctaves(numOctaves: number) {
+    setState((prev) => ({ ...prev, numOctaves }));
+  }
+
+  function setType(type: NoiseType) {
+    setState((prev) => ({ ...prev, type }));
+  }
+
+  function setOpacity(opacity: number) {
+    setState((prev) => ({ ...prev, opacity }));
+  }
+
+  function setBaseColor(baseColor: string) {
+    setState((prev) => ({ ...prev, baseColor }));
+  }
 
   const svg = useMemo(
     () => buildSvg(baseFrequency, numOctaves, type, opacity),

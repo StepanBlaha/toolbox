@@ -6,6 +6,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { useUrlState } from "../../hooks/useUrlState";
 import styles from "./Transform3D.module.css";
 
 interface TransformState {
@@ -69,7 +70,7 @@ function buildTransform(state: TransformState): string {
 
 export function Transform3D() {
   const ready = useRevealReady();
-  const [state, setState] = useState<TransformState>(DEFAULT_STATE);
+  const [state, setState] = useUrlState<TransformState>(DEFAULT_STATE);
   const [copied, setCopied] = useState(false);
 
   const transform = useMemo(() => buildTransform(state), [state]);

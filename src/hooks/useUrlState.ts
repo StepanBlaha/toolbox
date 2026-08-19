@@ -50,7 +50,7 @@ export function useUrlState<T>(
       timeoutRef.current = setTimeout(() => {
         writeStateToUrl(value);
         timeoutRef.current = null;
-      }, 150);
+      }, 50);
 
       return value;
     });

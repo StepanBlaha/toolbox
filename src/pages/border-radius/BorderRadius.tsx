@@ -6,6 +6,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { useUrlState } from "../../hooks/useUrlState";
 import styles from "./BorderRadius.module.css";
 
 type CornerKey = "tl" | "tr" | "br" | "bl";
@@ -36,25 +37,72 @@ function makeCorners(h: number, v: number): Corners {
   };
 }
 
+interface BorderRadiusState {
+  unit: Unit;
+  elliptical: boolean;
+  linked: boolean;
+  corners: Corners;
+  boxWidth: number;
+  boxHeight: number;
+}
+
+const DEFAULT_STATE: BorderRadiusState = {
+  unit: "px",
+  elliptical: false,
+  linked: true,
+  corners: makeCorners(24, 24),
+  boxWidth: 240,
+  boxHeight: 240,
+};
+
 export function BorderRadius() {
   const ready = useRevealReady();
-  const [unit, setUnit] = useState<Unit>("px");
-  const [elliptical, setElliptical] = useState(false);
-  const [linked, setLinked] = useState(true);
-  const [corners, setCorners] = useState<Corners>(() => makeCorners(24, 24));
-  const [boxWidth, setBoxWidth] = useState(240);
-  const [boxHeight, setBoxHeight] = useState(240);
+  const [state, setState] = useUrlState<BorderRadiusState>(DEFAULT_STATE);
+  const { unit, elliptical, linked, corners, boxWidth, boxHeight } = state;
   const [copied, setCopied] = useState(false);
 
   const maxVal = unit === "px" ? 200 : 50;
 
+  function setUnit(unit: Unit) {
+    setState((prev) => ({ ...prev, unit }));
+  }
+
+  function setElliptical(elliptical: boolean | ((prev: boolean) => boolean)) {
+    setState((prev) => ({
+      ...prev,
+      elliptical:
+        typeof elliptical === "function" ? elliptical(prev.elliptical) : elliptical,
+    }));
+  }
+
+  function setLinked(linked: boolean | ((prev: boolean) => boolean)) {
+    setState((prev) => ({
+      ...prev,
+      linked: typeof linked === "function" ? linked(prev.linked) : linked,
+    }));
+  }
+
+  function setBoxWidth(boxWidth: number) {
+    setState((prev) => ({ ...prev, boxWidth }));
+  }
+
+  function setBoxHeight(boxHeight: number) {
+    setState((prev) => ({ ...prev, boxHeight }));
+  }
+
   function updateCorner(key: CornerKey, patch: Partial<Corner>) {
-    setCorners((prev) => {
-      if (linked) {
-        const next = { ...prev[key], ...patch };
-        return makeCorners(next.h, next.v);
+    setState((prev) => {
+      if (prev.linked) {
+        const next = { ...prev.corners[key], ...patch };
+        return { ...prev, corners: makeCorners(next.h, next.v) };
       }
-      return { ...prev, [key]: { ...prev[key], ...patch } };
+      return {
+        ...prev,
+        corners: {
+          ...prev.corners,
+          [key]: { ...prev.corners[key], ...patch },
+        },
+      };
     });
   }
 

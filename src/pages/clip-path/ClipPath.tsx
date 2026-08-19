@@ -6,6 +6,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { useUrlState } from "../../hooks/useUrlState";
 import styles from "./ClipPath.module.css";
 
 interface Point {
@@ -137,15 +138,46 @@ function clonePoints(points: Point[]): Point[] {
   return points.map((p) => ({ ...p }));
 }
 
+interface CircleParams {
+  r: number;
+  cx: number;
+  cy: number;
+}
+
+interface EllipseParams {
+  rx: number;
+  ry: number;
+  cx: number;
+  cy: number;
+}
+
+interface InsetParams {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
+interface ClipPathState {
+  activeShape: string;
+  points: Point[];
+  circle: CircleParams;
+  ellipse: EllipseParams;
+  inset: InsetParams;
+}
+
+const DEFAULT_STATE: ClipPathState = {
+  activeShape: "Triangle",
+  points: clonePoints(SHAPES[0].points ?? []),
+  circle: { r: 50, cx: 50, cy: 50 },
+  ellipse: { rx: 40, ry: 30, cx: 50, cy: 50 },
+  inset: { top: 10, right: 10, bottom: 10, left: 10 },
+};
+
 function ClipPath() {
   const ready = useRevealReady();
-  const [activeShape, setActiveShape] = useState<string>("Triangle");
-  const [points, setPoints] = useState<Point[]>(
-    clonePoints(SHAPES[0].points ?? [])
-  );
-  const [circle, setCircle] = useState({ r: 50, cx: 50, cy: 50 });
-  const [ellipse, setEllipse] = useState({ rx: 40, ry: 30, cx: 50, cy: 50 });
-  const [inset, setInset] = useState({ top: 10, right: 10, bottom: 10, left: 10 });
+  const [state, setState] = useUrlState<ClipPathState>(DEFAULT_STATE);
+  const { activeShape, points, circle, ellipse, inset } = state;
   const [copied, setCopied] = useState(false);
 
   const previewRef = useRef<HTMLDivElement | null>(null);
@@ -182,10 +214,14 @@ function ClipPath() {
   const cssText = `clip-path: ${clipPathValue};`;
 
   function selectShape(next: ShapeDef) {
-    setActiveShape(next.name);
-    if (next.type === "polygon" && next.points) {
-      setPoints(clonePoints(next.points));
-    }
+    setState((prev) => ({
+      ...prev,
+      activeShape: next.name,
+      points:
+        next.type === "polygon" && next.points
+          ? clonePoints(next.points)
+          : prev.points,
+    }));
   }
 
   const updateFromPointer = useCallback((clientX: number, clientY: number, index: number) => {
@@ -194,10 +230,13 @@ function ClipPath() {
     const rect = box.getBoundingClientRect();
     const px = clamp(((clientX - rect.left) / rect.width) * 100, 0, 100);
     const py = clamp(((clientY - rect.top) / rect.height) * 100, 0, 100);
-    setPoints((prev) =>
-      prev.map((p, i) => (i === index ? { x: round(px), y: round(py) } : p))
-    );
-  }, []);
+    setState((prev) => ({
+      ...prev,
+      points: prev.points.map((p, i) =>
+        i === index ? { x: round(px), y: round(py) } : p
+      ),
+    }));
+  }, [setState]);
 
   function handlePointerDown(index: number) {
     return (e: React.PointerEvent) => {
@@ -289,7 +328,10 @@ function ClipPath() {
                   max={100}
                   value={circle.r}
                   onChange={(e) =>
-                    setCircle((c) => ({ ...c, r: Number(e.target.value) }))
+                    setState((prev) => ({
+                      ...prev,
+                      circle: { ...prev.circle, r: Number(e.target.value) },
+                    }))
                   }
                 />
               </div>
@@ -303,7 +345,10 @@ function ClipPath() {
                   max={100}
                   value={circle.cx}
                   onChange={(e) =>
-                    setCircle((c) => ({ ...c, cx: Number(e.target.value) }))
+                    setState((prev) => ({
+                      ...prev,
+                      circle: { ...prev.circle, cx: Number(e.target.value) },
+                    }))
                   }
                 />
               </div>
@@ -317,7 +362,10 @@ function ClipPath() {
                   max={100}
                   value={circle.cy}
                   onChange={(e) =>
-                    setCircle((c) => ({ ...c, cy: Number(e.target.value) }))
+                    setState((prev) => ({
+                      ...prev,
+                      circle: { ...prev.circle, cy: Number(e.target.value) },
+                    }))
                   }
                 />
               </div>
@@ -336,7 +384,10 @@ function ClipPath() {
                   max={100}
                   value={ellipse.rx}
                   onChange={(e) =>
-                    setEllipse((el) => ({ ...el, rx: Number(e.target.value) }))
+                    setState((prev) => ({
+                      ...prev,
+                      ellipse: { ...prev.ellipse, rx: Number(e.target.value) },
+                    }))
                   }
                 />
               </div>
@@ -350,7 +401,10 @@ function ClipPath() {
                   max={100}
                   value={ellipse.ry}
                   onChange={(e) =>
-                    setEllipse((el) => ({ ...el, ry: Number(e.target.value) }))
+                    setState((prev) => ({
+                      ...prev,
+                      ellipse: { ...prev.ellipse, ry: Number(e.target.value) },
+                    }))
                   }
                 />
               </div>
@@ -364,7 +418,10 @@ function ClipPath() {
                   max={100}
                   value={ellipse.cx}
                   onChange={(e) =>
-                    setEllipse((el) => ({ ...el, cx: Number(e.target.value) }))
+                    setState((prev) => ({
+                      ...prev,
+                      ellipse: { ...prev.ellipse, cx: Number(e.target.value) },
+                    }))
                   }
                 />
               </div>
@@ -378,7 +435,10 @@ function ClipPath() {
                   max={100}
                   value={ellipse.cy}
                   onChange={(e) =>
-                    setEllipse((el) => ({ ...el, cy: Number(e.target.value) }))
+                    setState((prev) => ({
+                      ...prev,
+                      ellipse: { ...prev.ellipse, cy: Number(e.target.value) },
+                    }))
                   }
                 />
               </div>
@@ -397,7 +457,10 @@ function ClipPath() {
                   max={50}
                   value={inset.top}
                   onChange={(e) =>
-                    setInset((n) => ({ ...n, top: Number(e.target.value) }))
+                    setState((prev) => ({
+                      ...prev,
+                      inset: { ...prev.inset, top: Number(e.target.value) },
+                    }))
                   }
                 />
               </div>
@@ -411,7 +474,10 @@ function ClipPath() {
                   max={50}
                   value={inset.right}
                   onChange={(e) =>
-                    setInset((n) => ({ ...n, right: Number(e.target.value) }))
+                    setState((prev) => ({
+                      ...prev,
+                      inset: { ...prev.inset, right: Number(e.target.value) },
+                    }))
                   }
                 />
               </div>
@@ -425,7 +491,10 @@ function ClipPath() {
                   max={50}
                   value={inset.bottom}
                   onChange={(e) =>
-                    setInset((n) => ({ ...n, bottom: Number(e.target.value) }))
+                    setState((prev) => ({
+                      ...prev,
+                      inset: { ...prev.inset, bottom: Number(e.target.value) },
+                    }))
                   }
                 />
               </div>
@@ -439,7 +508,10 @@ function ClipPath() {
                   max={50}
                   value={inset.left}
                   onChange={(e) =>
-                    setInset((n) => ({ ...n, left: Number(e.target.value) }))
+                    setState((prev) => ({
+                      ...prev,
+                      inset: { ...prev.inset, left: Number(e.target.value) },
+                    }))
                   }
                 />
               </div>

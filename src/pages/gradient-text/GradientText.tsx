@@ -6,6 +6,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { useUrlState } from "../../hooks/useUrlState";
 import styles from "./GradientText.module.css";
 
 interface ColorStop {
@@ -24,16 +25,26 @@ function composeGradient(angle: number, stops: ColorStop[]): string {
   return `linear-gradient(${angle}deg, ${stopsCss})`;
 }
 
+interface GradientTextState {
+  text: string;
+  fontSize: number;
+  fontWeight: number;
+  angle: number;
+  stops: ColorStop[];
+}
+
+const DEFAULT_STATE: GradientTextState = {
+  text: "Gradient",
+  fontSize: 72,
+  fontWeight: 700,
+  angle: 90,
+  stops: [makeStop("#3b82f6", 0), makeStop("#8b5cf6", 100)],
+};
+
 export function GradientText() {
   const ready = useRevealReady();
-  const [text, setText] = useState("Gradient");
-  const [fontSize, setFontSize] = useState(72);
-  const [fontWeight, setFontWeight] = useState(700);
-  const [angle, setAngle] = useState(90);
-  const [stops, setStops] = useState<ColorStop[]>([
-    makeStop("#3b82f6", 0),
-    makeStop("#8b5cf6", 100),
-  ]);
+  const [state, setState] = useUrlState<GradientTextState>(DEFAULT_STATE);
+  const { text, fontSize, fontWeight, angle, stops } = state;
   const [copied, setCopied] = useState(false);
 
   const composed = useMemo(() => composeGradient(angle, stops), [angle, stops]);
@@ -46,18 +57,37 @@ color: transparent;
 font-size: ${fontSize}px;
 font-weight: ${fontWeight};`;
 
+  function setText(text: string) {
+    setState((prev) => ({ ...prev, text }));
+  }
+
+  function setFontSize(fontSize: number) {
+    setState((prev) => ({ ...prev, fontSize }));
+  }
+
+  function setFontWeight(fontWeight: number) {
+    setState((prev) => ({ ...prev, fontWeight }));
+  }
+
+  function setAngle(angle: number) {
+    setState((prev) => ({ ...prev, angle }));
+  }
+
   function updateStop(id: string, patch: Partial<ColorStop>) {
-    setStops((prev) => prev.map((s) => (s.id === id ? { ...s, ...patch } : s)));
+    setState((prev) => ({
+      ...prev,
+      stops: prev.stops.map((s) => (s.id === id ? { ...s, ...patch } : s)),
+    }));
   }
 
   function addStop() {
     if (stops.length >= 4) return;
-    setStops((prev) => [...prev, makeStop("#ffffff", 50)]);
+    setState((prev) => ({ ...prev, stops: [...prev.stops, makeStop("#ffffff", 50)] }));
   }
 
   function removeStop(id: string) {
     if (stops.length <= 2) return;
-    setStops((prev) => prev.filter((s) => s.id !== id));
+    setState((prev) => ({ ...prev, stops: prev.stops.filter((s) => s.id !== id) }));
   }
 
   async function copy() {

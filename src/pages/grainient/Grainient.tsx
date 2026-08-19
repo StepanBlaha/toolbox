@@ -6,6 +6,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { useUrlState } from "../../hooks/useUrlState";
 import styles from "./Grainient.module.css";
 
 type BlendMode = "overlay" | "soft-light" | "multiply" | "screen";
@@ -35,16 +36,26 @@ function buildGrainUrl(scale: number, amount: number): string {
   return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
 }
 
+interface GrainientState {
+  angle: number;
+  stops: ColorStop[];
+  grainAmount: number;
+  grainScale: number;
+  blendMode: BlendMode;
+}
+
+const DEFAULT_STATE: GrainientState = {
+  angle: 90,
+  stops: [makeStop("#3b82f6", 0), makeStop("#8b5cf6", 100)],
+  grainAmount: 0.4,
+  grainScale: 0.8,
+  blendMode: "overlay",
+};
+
 export function Grainient() {
   const ready = useRevealReady();
-  const [angle, setAngle] = useState(90);
-  const [stops, setStops] = useState<ColorStop[]>([
-    makeStop("#3b82f6", 0),
-    makeStop("#8b5cf6", 100),
-  ]);
-  const [grainAmount, setGrainAmount] = useState(0.4);
-  const [grainScale, setGrainScale] = useState(0.8);
-  const [blendMode, setBlendMode] = useState<BlendMode>("overlay");
+  const [state, setState] = useUrlState<GrainientState>(DEFAULT_STATE);
+  const { angle, stops, grainAmount, grainScale, blendMode } = state;
   const [copied, setCopied] = useState(false);
 
   const gradientCss = useMemo(() => composeGradient(angle, stops), [angle, stops]);
@@ -60,18 +71,37 @@ export function Grainient() {
 
   const cssText = `background-image: ${grainUrl}, ${gradientCss};\nbackground-blend-mode: ${blendMode}, normal;`;
 
+  function setAngle(angle: number) {
+    setState((prev) => ({ ...prev, angle }));
+  }
+
+  function setGrainAmount(grainAmount: number) {
+    setState((prev) => ({ ...prev, grainAmount }));
+  }
+
+  function setGrainScale(grainScale: number) {
+    setState((prev) => ({ ...prev, grainScale }));
+  }
+
+  function setBlendMode(blendMode: BlendMode) {
+    setState((prev) => ({ ...prev, blendMode }));
+  }
+
   function updateStop(id: string, patch: Partial<ColorStop>) {
-    setStops((prev) => prev.map((s) => (s.id === id ? { ...s, ...patch } : s)));
+    setState((prev) => ({
+      ...prev,
+      stops: prev.stops.map((s) => (s.id === id ? { ...s, ...patch } : s)),
+    }));
   }
 
   function addStop() {
     if (stops.length >= 4) return;
-    setStops((prev) => [...prev, makeStop("#ffffff", 50)]);
+    setState((prev) => ({ ...prev, stops: [...prev.stops, makeStop("#ffffff", 50)] }));
   }
 
   function removeStop(id: string) {
     if (stops.length <= 2) return;
-    setStops((prev) => prev.filter((s) => s.id !== id));
+    setState((prev) => ({ ...prev, stops: prev.stops.filter((s) => s.id !== id) }));
   }
 
   async function copy() {

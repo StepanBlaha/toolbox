@@ -6,6 +6,7 @@ import { Frame } from "../../components/Frame/Frame";
 import { SectionHeading } from "../../components/SectionHeading/SectionHeading";
 import { revealProps, revealItem } from "../../lib/reveal";
 import { useRevealReady } from "../../context/RevealReadyContext";
+import { useUrlState } from "../../hooks/useUrlState";
 import styles from "./GradientBorder.module.css";
 
 interface ColorStop {
@@ -24,17 +25,43 @@ function composeGradient(angle: number, stops: ColorStop[]): string {
   return `linear-gradient(${angle}deg, ${stopsCss})`;
 }
 
+interface GradientBorderState {
+  borderWidth: number;
+  radius: number;
+  angle: number;
+  cardBg: string;
+  stops: ColorStop[];
+}
+
+const DEFAULT_STATE: GradientBorderState = {
+  borderWidth: 4,
+  radius: 16,
+  angle: 90,
+  cardBg: "#ffffff",
+  stops: [makeStop("#3b82f6", 0), makeStop("#8b5cf6", 100)],
+};
+
 export function GradientBorder() {
   const ready = useRevealReady();
-  const [borderWidth, setBorderWidth] = useState(4);
-  const [radius, setRadius] = useState(16);
-  const [angle, setAngle] = useState(90);
-  const [cardBg, setCardBg] = useState("#ffffff");
-  const [stops, setStops] = useState<ColorStop[]>([
-    makeStop("#3b82f6", 0),
-    makeStop("#8b5cf6", 100),
-  ]);
+  const [state, setState] = useUrlState<GradientBorderState>(DEFAULT_STATE);
+  const { borderWidth, radius, angle, cardBg, stops } = state;
   const [copied, setCopied] = useState(false);
+
+  function setBorderWidth(borderWidth: number) {
+    setState((prev) => ({ ...prev, borderWidth }));
+  }
+
+  function setRadius(radius: number) {
+    setState((prev) => ({ ...prev, radius }));
+  }
+
+  function setAngle(angle: number) {
+    setState((prev) => ({ ...prev, angle }));
+  }
+
+  function setCardBg(cardBg: string) {
+    setState((prev) => ({ ...prev, cardBg }));
+  }
 
   const gradient = useMemo(() => composeGradient(angle, stops), [angle, stops]);
 
@@ -45,17 +72,23 @@ background:
   ${gradient} border-box;`;
 
   function updateStop(id: string, patch: Partial<ColorStop>) {
-    setStops((prev) => prev.map((s) => (s.id === id ? { ...s, ...patch } : s)));
+    setState((prev) => ({
+      ...prev,
+      stops: prev.stops.map((s) => (s.id === id ? { ...s, ...patch } : s)),
+    }));
   }
 
   function addStop() {
     if (stops.length >= 4) return;
-    setStops((prev) => [...prev, makeStop("#f97316", 50)]);
+    setState((prev) => ({ ...prev, stops: [...prev.stops, makeStop("#f97316", 50)] }));
   }
 
   function removeStop(id: string) {
     if (stops.length <= 2) return;
-    setStops((prev) => prev.filter((s) => s.id !== id));
+    setState((prev) => ({
+      ...prev,
+      stops: prev.stops.filter((s) => s.id !== id),
+    }));
   }
 
   async function copy() {
